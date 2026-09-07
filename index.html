@@ -6,348 +6,311 @@
 <title>Surya &amp; Vishnupriya — Wedding Invitation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Parisienne&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ivory:#FFFBF6;
-    --blush:#F7D9D9;
-    --rose:#E8A9B8;
-    --gold:#C9A44C;
-    --gold-light:#EAD5A0;
-    --maroon:#8C2E45;
-    --maroon-deep:#6C1F35;
-    --sage:#8FA07C;
-    --sage-deep:#5F7150;
-    --ink:#3B2530;
-    --rule:rgba(140,46,69,0.22);
+    --cream:#FFF3DD;
+    --mustard:#EFA93D;
+    --orange:#E07A2E;
+    --rust:#C1451B;
+    --pink:#FF7A9C;
+    --olive:#6B7A4A;
+    --teal:#2F6F63;
+    --brown:#3E2A1E;
   }
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
   body{
-    margin:0; background:var(--ivory); color:var(--ink);
-    font-family:'Cormorant Garamond', serif; overflow-x:hidden; position:relative;
+    margin:0; background:var(--cream); color:var(--brown);
+    font-family:'Poppins', sans-serif; overflow-x:hidden; position:relative;
   }
   body.locked{ overflow:hidden; height:100vh; }
-  .script{ font-family:'Parisienne', cursive; }
+  .groovy{ font-family:'Bagel Fat One', cursive; }
 
-  /* ============ AURORA (continuous, drifting + parallax) ============ */
-  .aurora{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
-  .aurora span{ position:absolute; border-radius:50%; filter:blur(65px); opacity:0.55; animation:drift-aurora 22s ease-in-out infinite alternate; will-change:transform; }
-  .aurora span:nth-child(1){ width:46vw; height:46vw; top:-14vw; left:-10vw; background:var(--blush); }
-  .aurora span:nth-child(2){ width:40vw; height:40vw; top:20vh; right:-14vw; background:var(--gold-light); animation-duration:27s; animation-delay:-6s; }
-  .aurora span:nth-child(3){ width:50vw; height:50vw; bottom:-18vw; left:10vw; background:var(--rose); opacity:0.4; animation-duration:30s; animation-delay:-14s; }
-  .aurora span:nth-child(4){ width:34vw; height:34vw; bottom:10vh; right:5vw; background:var(--sage); opacity:0.22; animation-duration:24s; animation-delay:-3s; }
-  @keyframes drift-aurora{ 0%{ transform:translate(0,0) scale(1);} 100%{ transform:translate(5vw,6vh) scale(1.18);} }
+  /* ============ grain texture overlay ============ */
+  .grain{ position:fixed; inset:0; z-index:5; pointer-events:none; opacity:0.06; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
-  /* ============ starfield / sparkle overlay ============ */
-  .stars{ position:fixed; inset:0; z-index:1; pointer-events:none; }
-  .star{ position:absolute; border-radius:50%; background:var(--gold); animation:twinkleStar ease-in-out infinite; }
-  @keyframes twinkleStar{ 0%,100%{ opacity:0.1; transform:scale(0.6);} 50%{ opacity:1; transform:scale(1.4);} }
-
-  .gold-foil{
-    background:linear-gradient(110deg, var(--maroon-deep) 0%, var(--gold-light) 22%, var(--gold) 45%, var(--gold-light) 68%, var(--maroon-deep) 100%);
-    background-size:220% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
-    animation:shimmer 5s linear infinite;
+  /* ============ morphing blobs backdrop ============ */
+  .blobs{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  .blob{ position:absolute; filter:blur(2px); opacity:0.85; animation:morph 14s ease-in-out infinite, floatBlob 18s ease-in-out infinite; }
+  .blob.b1{ width:52vw; height:52vw; top:-18vw; left:-16vw; background:var(--mustard); animation-duration:16s, 20s; }
+  .blob.b2{ width:44vw; height:44vw; bottom:-16vw; right:-14vw; background:var(--pink); opacity:0.55; animation-duration:19s, 24s; animation-delay:-4s, -2s; }
+  .blob.b3{ width:34vw; height:34vw; top:30vh; right:-8vw; background:var(--teal); opacity:0.28; animation-duration:13s, 17s; animation-delay:-7s, -5s; }
+  @keyframes morph{
+    0%,100%{ border-radius:60% 40% 30% 70% / 60% 30% 70% 40%; }
+    33%{ border-radius:40% 60% 70% 30% / 40% 70% 30% 60%; }
+    66%{ border-radius:70% 30% 50% 50% / 30% 60% 40% 70%; }
   }
-  @keyframes shimmer{ to{ background-position:-220% center; } }
+  @keyframes floatBlob{ 0%,100%{ transform:translate(0,0) rotate(0deg);} 50%{ transform:translate(3vw,4vh) rotate(20deg);} }
 
-  .glow-pulse{ animation:glowPulse 2.6s ease-in-out infinite; }
-  @keyframes glowPulse{ 0%,100%{ box-shadow:0 0 6px rgba(201,164,76,0.25);} 50%{ box-shadow:0 0 20px rgba(201,164,76,0.65);} }
+  /* ============ sunburst ============ */
+  .sunburst{ position:absolute; top:50%; left:50%; width:900px; height:900px; transform:translate(-50%,-50%);
+    z-index:0; opacity:0.35; animation:spinSlow 60s linear infinite; pointer-events:none; }
+  @keyframes spinSlow{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
 
-  /* ============ CURTAIN INTRO ============ */
-  #curtain{ position:fixed; inset:0; z-index:999; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-  .panel{ position:absolute; top:0; bottom:0; width:51%;
-    background:radial-gradient(circle at 30% 20%, rgba(255,255,255,0.14), transparent 55%),
-      linear-gradient(160deg, var(--maroon) 0%, var(--maroon-deep) 60%, #4A1526 100%);
-    transition:transform 1.5s cubic-bezier(.76,0,.24,1);
-    box-shadow:0 0 60px rgba(0,0,0,0.35) inset;
+  @keyframes wiggle{ 0%,100%{ transform:rotate(-3deg);} 50%{ transform:rotate(3deg);} }
+  @keyframes bounceIn{ 0%{ transform:scale(0.3); opacity:0; } 60%{ transform:scale(1.08); opacity:1; } 80%{ transform:scale(0.96);} 100%{ transform:scale(1);} }
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
+  @keyframes popShadowPulse{ 0%,100%{ box-shadow:5px 5px 0 var(--brown);} 50%{ box-shadow:8px 8px 0 var(--brown);} }
+
+  /* ============ VINYL INTRO ============ */
+  #intro{
+    position:fixed; inset:0; z-index:999; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.6rem;
+    background:radial-gradient(circle at center, var(--mustard) 0%, var(--orange) 55%, var(--rust) 100%);
+    transition:opacity .8s ease, visibility .8s ease;
   }
-  .panel.left{ left:0; border-right:2px solid var(--gold-light); }
-  .panel.right{ right:0; border-left:2px solid var(--gold-light); }
-  #curtain.open .panel.left{ transform:translateX(-102%); }
-  #curtain.open .panel.right{ transform:translateX(102%); }
-  #curtain.gone{ visibility:hidden; pointer-events:none; }
-  .curtain-content{ position:relative; z-index:2; text-align:center; color:var(--gold-light); padding:2rem; transition:opacity .6s ease; }
-  #curtain.open .curtain-content{ opacity:0; }
-  .curtain-mono{ font-family:'Parisienne', cursive; font-size:3.4rem; margin:0 0 0.4rem; animation:floatY 3s ease-in-out infinite; }
-  .curtain-sub{ font-style:italic; opacity:0.85; margin:0 0 2rem; }
-  .open-btn{
-    font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.15rem;
-    background:transparent; color:var(--gold-light); border:1px solid var(--gold-light);
-    padding:0.85rem 2rem; border-radius:999px; cursor:pointer;
-    transition:background .3s ease, color .3s ease, transform .3s ease;
-    animation:glowPulse 2.2s ease-in-out infinite;
+  #intro.gone{ opacity:0; visibility:hidden; pointer-events:none; }
+  .intro-sun{ position:absolute; top:50%; left:50%; width:700px; height:700px; transform:translate(-50%,-50%); opacity:0.25; animation:spinSlow 40s linear infinite; }
+  .vinyl-wrap{ position:relative; z-index:2; cursor:pointer; }
+  .vinyl{ width:220px; height:220px; border-radius:50%; position:relative;
+    background:repeating-radial-gradient(circle, #201512 0px, #201512 5px, #2c1f1a 6px, #2c1f1a 10px);
+    box-shadow:0 20px 46px rgba(0,0,0,0.35);
+    transition:transform 1.1s cubic-bezier(.2,.7,.3,1);
   }
-  .open-btn:hover{ background:var(--gold-light); color:var(--maroon-deep); transform:translateY(-2px) scale(1.04); }
-
-  @keyframes floatY{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
-
-  /* garland / fairy lights */
-  .garland{ position:absolute; top:8%; left:0; right:0; display:flex; justify-content:center; gap:1.1rem; z-index:1; flex-wrap:wrap; padding:0 2rem; }
-  .bulb{ width:7px; height:7px; border-radius:50%; animation:bulbGlow 1.8s ease-in-out infinite; }
-  @keyframes bulbGlow{ 0%,100%{ opacity:0.25; transform:scale(0.75); filter:brightness(1);} 50%{ opacity:1; transform:scale(1.25); filter:brightness(1.6);} }
+  .vinyl.spin{ animation:vinylSpin 1.1s linear 3, vinylZoom 0.6s ease-in 3.3s forwards; }
+  @keyframes vinylSpin{ to{ transform:rotate(360deg); } }
+  @keyframes vinylZoom{ to{ transform:scale(2.4); opacity:0; } }
+  .vinyl-label{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:96px; height:96px; border-radius:50%; background:linear-gradient(160deg, var(--mustard), var(--rust));
+    display:flex; align-items:center; justify-content:center; text-align:center; box-shadow:0 0 0 3px var(--cream) inset; }
+  .vinyl-label span{ font-family:'Bagel Fat One', cursive; font-size:1rem; color:var(--cream); line-height:1.1; }
+  .vinyl-hole{ position:absolute; top:50%; left:50%; width:10px; height:10px; border-radius:50%; background:var(--cream); transform:translate(-50%,-50%); z-index:2; }
+  .press-play{
+    position:relative; z-index:2; font-family:'Bagel Fat One', cursive; font-size:1.1rem; letter-spacing:0.02em;
+    background:var(--brown); color:var(--cream); border:3px solid var(--brown);
+    padding:0.9rem 2.1rem; border-radius:999px; cursor:pointer;
+    box-shadow:5px 5px 0 var(--rust); transition:transform .2s ease, box-shadow .2s ease;
+    animation:wiggle 2.6s ease-in-out infinite;
+  }
+  .press-play:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--rust); }
+  .intro-caption{ position:relative; z-index:2; font-weight:700; color:var(--brown); letter-spacing:0.03em; text-align:center; }
 
   /* burst particles */
-  .burst-particle{ position:fixed; z-index:1000; pointer-events:none; width:11px; height:11px; }
-  @keyframes burstOut{ to{ transform:translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity:0; } }
+  .burst-particle{ position:fixed; z-index:1000; pointer-events:none; width:14px; height:14px; }
+  @keyframes burstOut{ to{ transform:translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.4); opacity:0; } }
 
-  /* ============ floating field: petals, flakes, hearts, tiny diyas ============ */
-  .petal-field{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
-  .petal{ position:absolute; top:-6%; opacity:0; animation-name:drift; animation-timing-function:linear; animation-iteration-count:infinite; }
-  .petal.sm{ width:8px; height:8px; } .petal.md{ width:13px; height:13px; } .petal.lg{ width:18px; height:18px; }
   @media (prefers-reduced-motion: reduce){
-    .petal, .aurora span, .star, .bulb, .gold-foil, .glow-pulse, .curtain-mono, .open-btn{ animation:none !important; }
-    #curtain{ display:none; }
+    .blob, .sunburst, .intro-sun, .press-play, .vinyl, [class*="wiggle-"]{ animation:none !important; }
     html{ scroll-behavior:auto; }
   }
-  @keyframes drift{
-    0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
-    6%{ opacity:0.8; }
-    50%{ transform:translateY(55vh) translateX(24px) rotate(180deg); }
-    94%{ opacity:0.55; }
-    100%{ transform:translateY(112vh) translateX(-20px) rotate(340deg); opacity:0; }
+
+  /* ============ MARQUEE ============ */
+  .marquee{ overflow:hidden; white-space:nowrap; background:var(--brown); padding:0.7rem 0; position:relative; z-index:2; }
+  .marquee-track{ display:inline-block; animation:marqueeMove 18s linear infinite; }
+  .marquee span{ display:inline-block; font-family:'Bagel Fat One', cursive; color:var(--cream); font-size:1rem; padding:0 1.4rem; }
+  @keyframes marqueeMove{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+  /* ============ LAYOUT ============ */
+  section{ position:relative; z-index:2; }
+  .wrap{ max-width:660px; margin:0 auto; padding:5rem 1.5rem; text-align:center; }
+
+  .reveal{ opacity:0; transform:translateY(24px) scale(0.96); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in{ opacity:1; transform:translateY(0) scale(1); }
+
+  .badge{
+    display:inline-block; font-family:'Bagel Fat One', cursive; font-size:0.95rem; color:var(--brown);
+    background:var(--cream); border:3px solid var(--brown); border-radius:999px; padding:0.5rem 1.3rem;
+    box-shadow:4px 4px 0 var(--brown); transform:rotate(-4deg); animation:wiggle 3.4s ease-in-out infinite;
   }
 
-  /* ============ PAGE / VINE ============ */
-  .page{ position:relative; z-index:2; }
-  .vine-col{ position:absolute; top:0; bottom:0; left:14px; width:44px; z-index:1; }
-  .vine-col::before{ content:""; position:absolute; top:0; bottom:0; left:50%; width:2px;
-    background:linear-gradient(var(--sage), var(--gold), var(--sage)); transform:translateX(-50%); opacity:0.6; }
-  .vine-marker{ position:absolute; left:50%; transform:translate(-50%,-50%) scale(0.4); width:24px; height:24px; opacity:0.35;
-    transition:transform .6s cubic-bezier(.34,1.56,.64,1), opacity .6s ease; }
-  .vine-marker.active{ transform:translate(-50%,-50%) scale(1); opacity:1; animation:floatY 3.2s ease-in-out infinite; }
-  .vine-marker svg{ width:100%; height:100%; }
-  @media (max-width:860px){ .vine-col{ display:none; } }
+  .names-wrap{ cursor:pointer; margin-top:1.6rem; }
+  .names{ font-family:'Bagel Fat One', cursive; font-size:clamp(2.6rem, 11vw, 5.2rem); line-height:1.2; margin:0.6rem 0;
+    color:var(--rust); text-shadow:4px 4px 0 var(--brown); }
+  .names .ch{ display:inline-block; opacity:0; transform:translateY(30px) scale(0.5) rotate(-8deg); }
+  .names.in .ch{ animation:letterPop .6s cubic-bezier(.2,1.4,.4,1) forwards; }
+  @keyframes letterPop{ to{ opacity:1; transform:translateY(0) scale(1) rotate(0); } }
+  .amp{ color:var(--teal); }
 
-  section{ position:relative; z-index:2; }
-  .wrap{ max-width:660px; margin:0 auto; padding:6rem 1.75rem; text-align:center; }
-  @media (min-width:861px){ .wrap{ padding-left:5.5rem; } }
+  .tagline{ margin-top:1.2rem; font-weight:500; font-size:1.05rem; line-height:1.7; max-width:32ch; margin-left:auto; margin-right:auto; opacity:0.85; }
+  .date-pill{ display:inline-block; margin-top:1.6rem; font-family:'Bagel Fat One', cursive; font-size:1.15rem;
+    background:var(--teal); color:var(--cream); padding:0.6rem 1.4rem; border-radius:999px; border:3px solid var(--brown);
+    box-shadow:4px 4px 0 var(--brown); }
 
-  .reveal{ opacity:0; transform:translateY(18px); transition:opacity 1s ease, transform 1s ease; }
-  .reveal.in{ opacity:1; transform:translateY(0); }
+  .countdown{ display:flex; justify-content:center; gap:0.9rem; margin-top:2.2rem; flex-wrap:wrap; }
+  .cd-cell{ min-width:70px; background:var(--cream); border:3px solid var(--brown); border-radius:16px; padding:0.7rem 0.5rem 0.5rem;
+    box-shadow:4px 4px 0 var(--brown); animation:bob 3s ease-in-out infinite; }
+  .cd-cell:nth-child(2){ animation-delay:.2s; } .cd-cell:nth-child(3){ animation-delay:.4s; } .cd-cell:nth-child(4){ animation-delay:.6s; }
+  .cd-num{ font-family:'Bagel Fat One', cursive; font-size:1.7rem; color:var(--rust); display:block; }
+  .cd-num.flip{ animation:flipPop .45s ease; }
+  @keyframes flipPop{ 0%{ transform:scale(0.5) rotate(-10deg); opacity:0.4;} 60%{ transform:scale(1.2) rotate(4deg);} 100%{ transform:scale(1) rotate(0);} }
+  .cd-label{ font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; opacity:0.7; }
 
-  .ornament{ display:flex; align-items:center; justify-content:center; gap:1rem; margin:1.8rem auto; }
-  .squiggle{ width:60px; height:12px; }
-  .squiggle path{ stroke-dasharray:6 5; animation:squiggleFlow 2.5s linear infinite; }
-  @keyframes squiggleFlow{ to{ stroke-dashoffset:-22; } }
-  .ornament svg.bloom-icon{ width:18px; height:18px; animation:spinSlow 9s linear infinite; }
-  @keyframes spinSlow{ to{ transform:rotate(360deg); } }
+  .scroll-cue{ margin-top:2.6rem; font-weight:700; font-size:0.95rem; opacity:0.6; animation:bob 2s ease-in-out infinite; }
 
-  .mandala-rings{ position:relative; width:150px; height:150px; margin:0 auto 0.4rem; }
-  .mandala-rings svg{ position:absolute; inset:0; width:100%; height:100%; }
-  .ring-a{ animation:spinCW 18s linear infinite; }
-  .ring-b{ animation:spinCCW 24s linear infinite; }
-  @keyframes spinCW{ to{ transform:rotate(360deg); } }
-  @keyframes spinCCW{ to{ transform:rotate(-360deg); } }
+  h2.section-title{ font-family:'Bagel Fat One', cursive; font-size:1.9rem; color:var(--rust); margin:0 0 0.3rem;
+    text-shadow:3px 3px 0 var(--brown); }
 
-  .ganesha{ width:42px; height:42px; margin:0 auto 1.1rem; color:var(--gold); position:relative; z-index:2; }
-  .invocation{ font-style:italic; font-size:1rem; color:var(--maroon); line-height:1.8; }
-  .eyebrow{ font-size:1.05rem; font-style:italic; opacity:0.8; margin:0 0 0.4rem; }
+  .families{ display:grid; grid-template-columns:1fr; gap:2rem; margin-top:2.2rem; }
+  @media (min-width:600px){ .families{ grid-template-columns:1fr 1fr; gap:1.6rem; } }
+  .fam-card{ background:var(--cream); border:3px solid var(--brown); border-radius:20px; padding:1.6rem 1.2rem;
+    box-shadow:6px 6px 0 var(--brown); position:relative; transform:rotate(-1.5deg); }
+  .fam-card:nth-child(2){ transform:rotate(1.5deg); }
+  .fam-card .tape{ position:absolute; top:-14px; left:50%; transform:translateX(-50%) rotate(-3deg); width:70px; height:26px;
+    background:rgba(239,169,61,0.75); border:1px solid rgba(62,42,30,0.3); }
+  .family-role{ font-family:'Bagel Fat One', cursive; font-size:0.95rem; color:var(--teal); margin-bottom:0.4rem; }
+  .family-name{ font-weight:700; font-size:1.3rem; margin:0 0 0.5rem; }
+  .family-parents{ font-size:0.98rem; line-height:1.6; opacity:0.8; font-weight:500; }
 
-  .names-wrap{ cursor:pointer; display:inline-block; animation:floatY 4s ease-in-out infinite; }
-  .names{ font-family:'Parisienne', cursive; font-size:clamp(3.2rem, 11vw, 6rem); line-height:1.15; margin:0;
-    text-shadow:0 0 24px rgba(201,164,76,0.35); }
-  .names .ch{ display:inline-block; opacity:0; transform:translateY(16px) rotate(3deg); }
-  .names.in .ch{ animation:letterIn .6s cubic-bezier(.2,.8,.2,1) forwards; }
-  @keyframes letterIn{ to{ opacity:1; transform:translateY(0) rotate(0); } }
-  .amp{ display:block; font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.6rem; color:var(--gold); margin:0.2rem 0; animation:pulseAmp 2.4s ease-in-out infinite; }
-  @keyframes pulseAmp{ 0%,100%{ opacity:0.75; transform:scale(1);} 50%{ opacity:1; transform:scale(1.15);} }
+  /* concert-ticket style event card */
+  .ticket{ position:relative; background:var(--cream); border:3px solid var(--brown); border-radius:18px;
+    margin:1.6rem 0; padding:1.8rem 1.4rem; box-shadow:6px 6px 0 var(--brown); text-align:left; overflow:hidden; }
+  .ticket::before, .ticket::after{ content:""; position:absolute; top:50%; width:26px; height:26px; background:var(--cream);
+    border:3px solid var(--brown); border-radius:50%; transform:translateY(-50%); }
+  .ticket::before{ left:-16px; } .ticket::after{ right:-16px; }
+  .ticket-top{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+  .ticket-tag{ font-family:'Bagel Fat One', cursive; font-size:0.85rem; background:var(--rust); color:var(--cream);
+    padding:0.3rem 0.8rem; border-radius:999px; }
+  .ticket-time{ font-family:'Bagel Fat One', cursive; font-size:1.8rem; color:var(--rust); margin:0.7rem 0 0.3rem; }
+  .ticket-venue{ font-weight:700; font-size:1.15rem; margin:0 0 0.15rem; }
+  .ticket-sub{ font-size:0.95rem; opacity:0.75; font-weight:500; }
+  .perforation{ border-top:3px dashed var(--brown); margin:1.2rem 0; opacity:0.5; }
 
-  .tagline{ margin-top:1.6rem; font-size:1.15rem; line-height:1.85; max-width:32ch; margin-left:auto; margin-right:auto; opacity:0.85; }
-  .date-badge{ margin-top:1.8rem; font-size:1.35rem; color:var(--maroon); }
-  .date-badge .day{ font-style:italic; opacity:0.8; font-size:1.02rem; display:block; margin-bottom:0.1rem; }
+  .map-frame{ margin-top:1.2rem; border-radius:14px; overflow:hidden; border:3px solid var(--brown); box-shadow:6px 6px 0 var(--brown); }
+  .map-frame iframe{ width:100%; height:260px; border:0; display:block; }
 
-  .countdown{ display:flex; justify-content:center; gap:1rem; margin-top:2.4rem; flex-wrap:wrap; perspective:400px; }
-  .cd-cell{ min-width:74px; background:rgba(255,255,255,0.6); border:1px solid var(--rule); border-radius:10px; padding:0.85rem 0.5rem 0.6rem; backdrop-filter:blur(3px); animation:glowPulse 3s ease-in-out infinite; }
-  .cd-cell:nth-child(2){ animation-delay:0.3s; } .cd-cell:nth-child(3){ animation-delay:0.6s; } .cd-cell:nth-child(4){ animation-delay:0.9s; }
-  .cd-num{ font-size:2rem; font-style:italic; color:var(--maroon-deep); line-height:1; display:block; transform-origin:center; }
-  .cd-num.flip{ animation:flipIn .5s ease; }
-  @keyframes flipIn{ 0%{ transform:rotateX(85deg); opacity:0.3;} 60%{ transform:rotateX(-8deg); opacity:1;} 100%{ transform:rotateX(0);} }
-  .cd-label{ font-size:0.75rem; letter-spacing:0.08em; opacity:0.65; margin-top:0.3rem; display:block; }
+  .stripe-bar{ height:14px; background:repeating-linear-gradient(45deg, var(--rust) 0 14px, var(--mustard) 14px 28px, var(--teal) 28px 42px); }
 
-  .scroll-cue{ margin-top:2.8rem; font-size:0.95rem; font-style:italic; opacity:0.55; animation:bob 2.2s ease-in-out infinite; }
-  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(7px);} }
-
-  h2.section-title{ font-style:italic; font-weight:500; font-size:1.9rem; color:var(--maroon-deep); margin:0 0 0.3rem; }
-
-  .families{ display:grid; grid-template-columns:1fr; gap:2.6rem; margin-top:2.6rem; }
-  @media (min-width:560px){ .families{ grid-template-columns:1fr auto 1fr; align-items:center; gap:1.5rem; } }
-  .family-role{ font-style:italic; font-size:1rem; color:var(--gold); margin-bottom:0.35rem; }
-  .family-name{ font-size:1.55rem; margin:0 0 0.5rem; }
-  .family-parents{ font-size:1.05rem; line-height:1.6; opacity:0.78; }
-  .divider-vert{ width:1px; height:70px; background:linear-gradient(var(--rule), var(--gold), var(--rule)); margin:0 auto; position:relative; overflow:hidden; }
-  .divider-vert::after{ content:""; position:absolute; left:0; top:-100%; width:100%; height:50%; background:linear-gradient(var(--gold-light), transparent); animation:sparkSlide 2.4s linear infinite; }
-  @keyframes sparkSlide{ to{ top:150%; } }
-  @media (max-width:559px){ .divider-vert{ width:70px; height:1px; } }
-
-  .event-card{ padding:2.2rem 0; }
-  .event-card + .event-card{ border-top:1px solid var(--rule); }
-  .event-icon-ring{ width:62px; height:62px; margin:0 auto 0.9rem; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.55); position:relative; animation:glowPulse 2.4s ease-in-out infinite; }
-  .event-icon-ring::before{ content:""; position:absolute; inset:-8px; border:1px dashed var(--gold-light); border-radius:50%; animation:spinSlow 14s linear infinite; }
-  .event-icon-ring svg{ width:26px; height:26px; color:var(--maroon); }
-  .event-date{ font-size:1rem; color:var(--gold); font-style:italic; margin-bottom:0.4rem; }
-  .event-time{ font-size:2rem; font-style:italic; color:var(--maroon-deep); margin:0.2rem 0 0.7rem; }
-  .event-venue{ font-size:1.25rem; margin:0 0 0.15rem; }
-  .event-sub{ font-size:1.05rem; opacity:0.72; }
-
-  .map-frame{ margin-top:1.6rem; border-radius:14px; overflow:hidden; border:1px solid var(--rule); box-shadow:0 12px 30px rgba(140,46,69,0.15); }
-  .map-frame iframe{ width:100%; height:280px; border:0; display:block; }
-
-  footer{ padding-bottom:2rem; }
-  .rose-mark{ width:56px; height:56px; margin:0 auto 1.4rem; color:var(--maroon); animation:spinSlow 20s linear infinite; }
-  .blessing{ font-style:italic; font-size:1.2rem; color:var(--maroon-deep); line-height:1.8; max-width:26ch; margin:0 auto 2rem; }
-  .hosts{ font-size:1.1rem; }
-  .hosts .host-names{ display:block; margin-bottom:0.3rem; font-size:1.2rem; }
-  .address{ margin-top:0.5rem; font-size:0.98rem; opacity:0.65; line-height:1.6; }
-  .sign-off{ margin-top:2.2rem; font-family:'Parisienne', cursive; font-size:1.7rem; color:var(--gold); animation:floatY 3.4s ease-in-out infinite; }
+  footer{ padding-bottom:0; text-align:center; }
+  .footer-inner{ padding:4rem 1.5rem 3rem; }
+  .rose-mark{ font-size:2.2rem; margin-bottom:1rem; display:inline-block; animation:wiggle 3s ease-in-out infinite; }
+  .blessing{ font-weight:600; font-size:1.05rem; line-height:1.8; max-width:26ch; margin:0 auto 1.6rem; }
+  .hosts{ font-size:0.98rem; font-weight:500; }
+  .hosts .host-names{ display:block; margin-bottom:0.3rem; font-weight:700; font-size:1.1rem; }
+  .address{ margin-top:0.4rem; font-size:0.9rem; opacity:0.7; line-height:1.6; }
+  .sign-off{ margin-top:1.8rem; font-family:'Bagel Fat One', cursive; font-size:1.6rem; color:var(--rust); text-shadow:3px 3px 0 var(--brown); }
 </style>
 </head>
 <body class="locked">
 
-<div class="aurora" id="auroraLayer" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-<div class="stars" id="starsLayer" aria-hidden="true"></div>
-<div class="petal-field" id="petalField" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="blobs" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
 
-<div id="curtain">
-  <div class="garland" id="curtainGarland" aria-hidden="true"></div>
-  <div class="panel left"></div>
-  <div class="panel right"></div>
-  <div class="curtain-content">
-    <p class="curtain-mono">S &amp; V</p>
-    <p class="curtain-sub">An invitation awaits</p>
-    <button class="open-btn" id="openBtn">Open the Invitation ✦</button>
+<div id="intro">
+  <svg class="intro-sun" viewBox="0 0 200 200" aria-hidden="true">
+    <g fill="#FFF3DD">
+      <!-- rays generated by JS -->
+    </g>
+  </svg>
+  <div class="vinyl-wrap" id="vinylWrap">
+    <div class="vinyl" id="vinyl">
+      <div class="vinyl-label"><span>S &amp; V</span></div>
+      <div class="vinyl-hole"></div>
+    </div>
   </div>
+  <button class="press-play" id="playBtn">▶ press play</button>
+  <p class="intro-caption">a groovy invitation is spinning up ✦</p>
 </div>
 
 <div class="page">
-  <div class="vine-col" aria-hidden="true">
-    <div class="vine-marker" data-idx="0"><svg viewBox="0 0 24 24" fill="none" stroke="var(--maroon)" stroke-width="1.4"><path d="M12 2c3.5 4 3.5 8 0 12-3.5-4-3.5-8 0-12z"/><path d="M12 14c-4 2-6 6-4 10"/><path d="M12 14c4 2 6 6 4 10"/></svg></div>
-    <div class="vine-marker" data-idx="1"><svg viewBox="0 0 24 24" fill="none" stroke="var(--sage-deep)" stroke-width="1.4"><ellipse cx="12" cy="12" rx="9" ry="5" transform="rotate(35 12 12)"/></svg></div>
-    <div class="vine-marker" data-idx="2"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.4"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8" opacity="0.6"/></svg></div>
-    <div class="vine-marker" data-idx="3"><svg viewBox="0 0 24 24" fill="none" stroke="var(--maroon)" stroke-width="1.4"><path d="M12 2c3.5 4 3.5 8 0 12-3.5-4-3.5-8 0-12z"/><path d="M12 14c-4 2-6 6-4 10"/><path d="M12 14c4 2 6 6 4 10"/></svg></div>
-  </div>
+  <section id="sunburstHost">
+    <svg class="sunburst" viewBox="0 0 200 200" aria-hidden="true" id="sunburstSvg"></svg>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>✦ SURYA + VISHNUPRIYA</span><span>13 · 09 · 2026</span><span>SAVE THE DATE ✦</span><span>BANGALORE</span>
+        <span>✦ SURYA + VISHNUPRIYA</span><span>13 · 09 · 2026</span><span>SAVE THE DATE ✦</span><span>BANGALORE</span>
+      </div>
+    </div>
 
-  <section class="vine-anchor" data-idx="0">
     <div class="wrap">
       <div class="reveal in" style="transition-delay:0s">
-        <div class="mandala-rings" aria-hidden="true">
-          <svg class="ring-a" viewBox="0 0 150 150" fill="none" stroke="var(--gold-light)" stroke-width="1"><circle cx="75" cy="75" r="70" stroke-dasharray="4 6"/></svg>
-          <svg class="ring-b" viewBox="0 0 150 150" fill="none" stroke="var(--rose)" stroke-width="1"><circle cx="75" cy="75" r="58" stroke-dasharray="2 8"/></svg>
-          <svg viewBox="0 0 150 150" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-          </svg>
-          <svg class="ganesha" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">
-            <circle cx="32" cy="24" r="9"/>
-            <path d="M23 26c-3 2-4 6-2 9 2 2 5 1 6-2"/>
-            <path d="M41 26c3 2 4 6 2 9-2 2-5 1-6-2"/>
-            <path d="M28 30c0 5 1 9 4 9s4-4 4-9"/>
-            <path d="M30 39c-1 4-4 6-8 6" opacity="0.8"/>
-            <ellipse cx="32" cy="46" rx="10" ry="7"/>
-            <path d="M22 48c-4 2-6 6-5 10"/>
-            <path d="M42 48c4 2 6 6 5 10"/>
-          </svg>
-        </div>
-        <p class="invocation">|| Om Virat Vishwabrahmane Namah ||<br>|| Arulmigu Meenakshi Sundareshwarar Thunai ||</p>
+        <span class="badge">🕉️ with blessings</span>
+        <p class="tagline" style="margin-top:1rem; font-style:italic;">|| Om Virat Vishwabrahmane Namah ||<br>|| Arulmigu Meenakshi Sundareshwarar Thunai ||</p>
       </div>
 
       <div class="reveal in" style="transition-delay:0.15s">
-        <div class="ornament" aria-hidden="true">
-          <svg class="squiggle" viewBox="0 0 60 12" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M0 6c6-8 12 8 18 0s12-8 18 0 12 8 18 0"/></svg>
-          <svg class="bloom-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M12 2c3.5 4 3.5 8 0 12-3.5-4-3.5-8 0-12z"/><path d="M12 14c-4 2-6 6-4 10"/><path d="M12 14c4 2 6 6 4 10"/></svg>
-          <svg class="squiggle" viewBox="0 0 60 12" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M0 6c6-8 12 8 18 0s12-8 18 0 12 8 18 0"/></svg>
-        </div>
-        <p class="eyebrow">Together with their families</p>
+        <p class="tagline" style="font-weight:700; opacity:1;">together with their families</p>
       </div>
 
       <div class="names-wrap" id="namesWrap">
-        <h1 class="names gold-foil" id="names"><span class="letters" id="lettersTarget"></span></h1>
+        <h1 class="names" id="names"><span class="letters" id="lettersTarget"></span></h1>
       </div>
 
-      <div class="reveal in" style="transition-delay:0.5s">
-        <p class="tagline">invite you, with joy in their hearts, to celebrate the beginning of their journey together</p>
-        <p class="date-badge"><span class="day">Sunday</span>13 September 2026</p>
+      <div class="reveal in" style="transition-delay:0.45s">
+        <p class="tagline">are tying the knot and throwing the party of the year — come celebrate with us!</p>
+        <div class="date-pill">SUN · 13 SEP 2026</div>
       </div>
 
-      <div class="reveal in" style="transition-delay:0.65s">
+      <div class="reveal in" style="transition-delay:0.6s">
         <div class="countdown" id="countdown">
           <div class="cd-cell"><span class="cd-num" id="cd-days">--</span><span class="cd-label">days</span></div>
-          <div class="cd-cell"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">hours</span></div>
-          <div class="cd-cell"><span class="cd-num" id="cd-mins">--</span><span class="cd-label">minutes</span></div>
-          <div class="cd-cell"><span class="cd-num" id="cd-secs">--</span><span class="cd-label">seconds</span></div>
+          <div class="cd-cell"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">hrs</span></div>
+          <div class="cd-cell"><span class="cd-num" id="cd-mins">--</span><span class="cd-label">min</span></div>
+          <div class="cd-cell"><span class="cd-num" id="cd-secs">--</span><span class="cd-label">sec</span></div>
         </div>
       </div>
 
-      <div class="reveal in" style="transition-delay:0.8s">
-        <p class="scroll-cue">↓ the details</p>
+      <div class="reveal in" style="transition-delay:0.75s">
+        <p class="scroll-cue">↓ scroll for the details</p>
       </div>
     </div>
   </section>
 
-  <section class="vine-anchor" data-idx="1">
+  <div class="stripe-bar"></div>
+
+  <section>
     <div class="wrap">
-      <div class="reveal"><h2 class="section-title">With the blessings of</h2></div>
+      <div class="reveal"><h2 class="section-title">the fam ✨</h2></div>
       <div class="families reveal">
-        <div>
-          <p class="family-role">The groom</p>
+        <div class="fam-card">
+          <div class="tape"></div>
+          <p class="family-role">groom</p>
           <p class="family-name">R. K. Surya, B.Tech.</p>
-          <p class="family-parents">Son of<br>Sri P. Ravi Kannan Achari<br>&amp; Smt. R. K. Mariyammal</p>
+          <p class="family-parents">son of Sri P. Ravi Kannan Achari &amp; Smt. R. K. Mariyammal</p>
         </div>
-        <div class="divider-vert" aria-hidden="true"></div>
-        <div>
-          <p class="family-role">The bride</p>
+        <div class="fam-card">
+          <div class="tape"></div>
+          <p class="family-role">bride</p>
           <p class="family-name">M. Vishnupriya, M.Com.</p>
-          <p class="family-parents">Daughter of<br>Sri S. Meenakshi Sundaram<br>&amp; Smt. M. Bagya Lakshmi</p>
+          <p class="family-parents">daughter of Sri S. Meenakshi Sundaram &amp; Smt. M. Bagya Lakshmi</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="vine-anchor" data-idx="2">
-    <div class="wrap">
-      <div class="reveal">
-        <h2 class="section-title">Please join us</h2>
-        <div class="ornament" aria-hidden="true">
-          <svg class="squiggle" viewBox="0 0 60 12" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M0 6c6-8 12 8 18 0s12-8 18 0 12 8 18 0"/></svg>
-          <svg class="bloom-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M12 2c3.5 4 3.5 8 0 12-3.5-4-3.5-8 0-12z"/><path d="M12 14c-4 2-6 6-4 10"/><path d="M12 14c4 2 6 6 4 10"/></svg>
-          <svg class="squiggle" viewBox="0 0 60 12" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M0 6c6-8 12 8 18 0s12-8 18 0 12 8 18 0"/></svg>
-        </div>
-      </div>
+  <div class="stripe-bar"></div>
 
-      <div class="event-card reveal">
-        <div class="event-icon-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></div>
-        <p class="event-date">Muhurtham · Sunday, 13 September</p>
-        <p class="event-time">7:00 – 8:30 a.m.</p>
-        <p class="event-venue">Shri Udbhava Kumaraswamy Temple</p>
-        <p class="event-sub">Kumaraswamy Layout, Bangalore</p>
+  <section>
+    <div class="wrap">
+      <div class="reveal"><h2 class="section-title">the lineup 🎟️</h2></div>
+
+      <div class="ticket reveal">
+        <div class="ticket-top">
+          <span class="ticket-tag">MUHURTHAM</span>
+          <span style="font-weight:700;">SUN, 13 SEP</span>
+        </div>
+        <p class="ticket-time">7:00 – 8:30 AM</p>
+        <p class="ticket-venue">Shri Udbhava Kumaraswamy Temple</p>
+        <p class="ticket-sub">Kumaraswamy Layout, Bangalore</p>
+        <div class="perforation"></div>
         <div class="map-frame">
           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.028889248053!2d77.56510279999999!3d12.9058639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1563b267b3f3%3A0x2cf8eacfa10e64a0!2sShri%20Udbhava%20Kumaraswami%20Temple!5e0!3m2!1sen!2sin!4v1788778936433!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
       </div>
 
-      <div class="event-card reveal">
-        <div class="event-icon-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg></div>
-        <p class="event-date">Reception · Sunday, 13 September</p>
-        <p class="event-time">10:30 a.m. onwards</p>
-        <p class="event-venue">Sri Ayyappa Swamy Temple Mantapa</p>
-        <p class="event-sub">(Near Sagar Hospitals) · Kumaraswamy Layout, Bangalore</p>
+      <div class="ticket reveal">
+        <div class="ticket-top">
+          <span class="ticket-tag" style="background:var(--teal);">RECEPTION</span>
+          <span style="font-weight:700;">SUN, 13 SEP</span>
+        </div>
+        <p class="ticket-time">10:30 AM onwards</p>
+        <p class="ticket-venue">Sri Ayyappa Swamy Temple Mantapa</p>
+        <p class="ticket-sub">(Near Sagar Hospitals) · Kumaraswamy Layout, Bangalore</p>
       </div>
     </div>
   </section>
 
-  <footer class="vine-anchor" data-idx="3">
-    <div class="wrap">
-      <div class="reveal">
-        <svg class="rose-mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2">
-          <circle cx="32" cy="32" r="7"/><circle cx="32" cy="32" r="13" opacity="0.65"/><circle cx="32" cy="32" r="19" opacity="0.35"/>
-          <path d="M32 51c-7 3-10 9-9 15" opacity="0.7" style="color:var(--sage)"/>
-          <path d="M12 40c2 7-1 12-7 14" opacity="0.5" style="color:var(--sage)"/>
-        </svg>
-        <p class="blessing">With the blessings of our families, and the warmest wishes of relatives and friends</p>
-        <p class="hosts">
-          <span class="host-names">Sri P. Ravi Kannan Achari &amp; Smt. R. K. Mariyammal</span>
-          <span class="address">No. 239, 6th Cross, Bhavani Nagar, BSK II Stage,<br>Bangalore – 560 070</span>
-        </p>
-        <p class="sign-off gold-foil">With love, Surya &amp; Vishnupriya</p>
-      </div>
+  <div class="stripe-bar"></div>
+
+  <footer>
+    <div class="footer-inner reveal">
+      <span class="rose-mark">🌸</span>
+      <p class="blessing">with the blessings of our families &amp; the best wishes of relatives and friends</p>
+      <p class="hosts">
+        <span class="host-names">Sri P. Ravi Kannan Achari &amp; Smt. R. K. Mariyammal</span>
+        <span class="address">No. 239, 6th Cross, Bhavani Nagar, BSK II Stage,<br>Bangalore – 560 070</span>
+      </p>
+      <p class="sign-off">see you there! S &amp; V</p>
     </div>
   </footer>
 </div>
@@ -355,74 +318,38 @@
 <script>
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---- generate starfield ----
-  if (!reduceMotion){
-    const starsLayer = document.getElementById('starsLayer');
-    for (let i = 0; i < 45; i++){
-      const s = document.createElement('div');
-      s.className = 'star';
-      const size = 1 + Math.random() * 2.5;
-      s.style.width = size + 'px'; s.style.height = size + 'px';
-      s.style.left = Math.random()*100 + 'vw';
-      s.style.top = Math.random()*100 + 'vh';
-      s.style.animationDuration = (2 + Math.random()*3) + 's';
-      s.style.animationDelay = (Math.random()*3) + 's';
-      starsLayer.appendChild(s);
+  // build sunburst rays (used in intro + main page)
+  function buildSunburst(svg, rayColor){
+    const cx = 100, cy = 100, rays = 20, outerR = 98, innerR = 42;
+    let html = '';
+    for (let i = 0; i < rays; i++){
+      const a1 = (i / rays) * Math.PI * 2;
+      const a2 = ((i + 0.55) / rays) * Math.PI * 2;
+      const x1 = cx + Math.cos(a1) * innerR, y1 = cy + Math.sin(a1) * innerR;
+      const x2 = cx + Math.cos(a1) * outerR, y2 = cy + Math.sin(a1) * outerR;
+      const x3 = cx + Math.cos(a2) * outerR, y3 = cy + Math.sin(a2) * outerR;
+      const x4 = cx + Math.cos(a2) * innerR, y4 = cy + Math.sin(a2) * innerR;
+      html += '<path d="M'+x1+' '+y1+' L'+x2+' '+y2+' L'+x3+' '+y3+' L'+x4+' '+y4+' Z" fill="'+rayColor+'"/>';
     }
+    svg.innerHTML = html;
   }
+  buildSunburst(document.querySelector('.intro-sun'), '#FFF3DD');
+  buildSunburst(document.getElementById('sunburstSvg'), '#EFA93D');
 
-  // ---- generate petal field (more variety, more count) ----
-  const petalField = document.getElementById('petalField');
-  const petalShapes = [
-    {c:'#E8A9B8', d:'M12 2c3 3 3 7 0 10-3-3-3-7 0-10z'},
-    {c:'#C9A44C', circle:true},
-    {c:'#8C2E45', d:'M12 2c3 3 3 7 0 10-3-3-3-7 0-10z'},
-    {c:'#EAD5A0', circle:true},
-    {c:'#8FA07C', d:'M12 2c4 4 4 9 0 14-4-5-4-10 0-14z'},
-    {c:'#E8A9B8', heart:true}
-  ];
-  if (!reduceMotion){
-    for (let i = 0; i < 20; i++){
-      const shape = petalShapes[i % petalShapes.length];
-      const p = document.createElement('div');
-      const sizeClass = ['sm','md','lg'][i % 3];
-      p.className = 'petal ' + sizeClass;
-      p.style.left = (Math.random()*96) + '%';
-      p.style.animationDuration = (16 + Math.random()*22) + 's';
-      p.style.animationDelay = (Math.random()*18) + 's';
-      let inner;
-      if (shape.circle){ inner = '<circle cx="12" cy="12" r="10"/>'; }
-      else if (shape.heart){ inner = '<path d="M12 21s-7-4.6-9.7-9C.5 9 2 5 6 5c2.1 0 3.6 1.2 6 4 2.4-2.8 3.9-4 6-4 4 0 5.5 4 3.7 7-2.7 4.4-9.7 9-9.7 9z"/>'; }
-      else { inner = '<path d="'+shape.d+'"/>'; }
-      p.innerHTML = '<svg viewBox="0 0 24 24" fill="'+shape.c+'">'+inner+'</svg>';
-      petalField.appendChild(p);
-    }
-  }
-
-  // ---- garland bulbs on curtain ----
-  const bulbColors = ['#EAD5A0','#E8A9B8','#C9A44C','#8FA07C'];
-  const curtainGarland = document.getElementById('curtainGarland');
-  for (let i = 0; i < 13; i++){
-    const b = document.createElement('div');
-    b.className = 'bulb';
-    b.style.background = bulbColors[i % bulbColors.length];
-    b.style.animationDelay = (i * 0.15) + 's';
-    curtainGarland.appendChild(b);
-  }
-
-  // ---- split names into animated letters ----
+  // split names into animated letters
   const target = document.getElementById('lettersTarget');
   let i = 0;
   function addWord(word, isAmp){
     if (isAmp){
-      const span = document.createElement('span');
-      span.className = 'amp'; span.textContent = '&';
-      target.appendChild(span); i++; return;
+      const s = document.createElement('span');
+      s.className = 'ch amp'; s.textContent = ' & ';
+      s.style.animationDelay = (i * 0.05) + 's';
+      target.appendChild(s); i++; return;
     }
     [...word].forEach(ch => {
       const s = document.createElement('span');
       s.className = 'ch'; s.textContent = ch;
-      s.style.animationDelay = (i * 0.045) + 's';
+      s.style.animationDelay = (i * 0.05) + 's';
       target.appendChild(s); i++;
     });
   }
@@ -430,65 +357,31 @@
   addWord('', true);
   addWord('Vishnupriya', false);
 
-  // ---- curtain open ----
-  const curtain = document.getElementById('curtain');
-  const openBtn = document.getElementById('openBtn');
+  // vinyl intro
+  const intro = document.getElementById('intro');
+  const vinyl = document.getElementById('vinyl');
+  const playBtn = document.getElementById('playBtn');
   const namesEl = document.getElementById('names');
-  function openCurtain(){
-    curtain.classList.add('open');
-    document.body.classList.remove('locked');
-    setTimeout(() => curtain.classList.add('gone'), 1600);
-    setTimeout(() => namesEl.classList.add('in'), 500);
+  function pressPlay(){
+    if (vinyl.classList.contains('spin')) return;
+    vinyl.classList.add('spin');
+    playBtn.style.visibility = 'hidden';
+    setTimeout(() => document.body.classList.remove('locked'), 1400);
+    setTimeout(() => namesEl.classList.add('in'), 1500);
+    setTimeout(() => intro.classList.add('gone'), 3900);
   }
-  openBtn.addEventListener('click', openCurtain);
-  setTimeout(() => { if (!curtain.classList.contains('open')) openCurtain(); }, 6000);
+  playBtn.addEventListener('click', pressPlay);
+  document.getElementById('vinylWrap').addEventListener('click', pressPlay);
+  setTimeout(() => { if (!vinyl.classList.contains('spin')) pressPlay(); }, 8000);
 
-  // ---- reveal on scroll ----
+  // reveal on scroll
   const revealEls = document.querySelectorAll('.reveal:not(.in)');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => { if (entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); } });
   }, { threshold:0.15 });
   revealEls.forEach(el => io.observe(el));
 
-  // ---- vine markers ----
-  const anchors = document.querySelectorAll('.vine-anchor');
-  function layoutVine(){
-    anchors.forEach(sec => {
-      const idx = sec.dataset.idx;
-      const marker = document.querySelector('.vine-marker[data-idx="'+idx+'"]');
-      if (!marker) return;
-      marker.style.top = (sec.offsetTop + sec.offsetHeight/2) + 'px';
-    });
-  }
-  window.addEventListener('load', layoutVine);
-  window.addEventListener('resize', layoutVine);
-  layoutVine();
-  const vineIO = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const marker = document.querySelector('.vine-marker[data-idx="'+entry.target.dataset.idx+'"]');
-      if (marker && entry.isIntersecting) marker.classList.add('active');
-    });
-  }, { threshold:0.4 });
-  anchors.forEach(a => vineIO.observe(a));
-
-  // ---- parallax on scroll for aurora blobs ----
-  let lastScroll = 0, ticking = false;
-  const auroraSpans = document.querySelectorAll('.aurora span');
-  window.addEventListener('scroll', () => {
-    lastScroll = window.scrollY;
-    if (!ticking){
-      requestAnimationFrame(() => {
-        auroraSpans.forEach((s, idx) => {
-          const speed = 0.03 + idx*0.015;
-          s.style.marginTop = (-lastScroll*speed) + 'px';
-        });
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
-
-  // ---- flip countdown ----
+  // flip-pop countdown
   const weddingTime = new Date('2026-09-13T07:00:00+05:30').getTime();
   const cd = { d: document.getElementById('cd-days'), h: document.getElementById('cd-hours'), m: document.getElementById('cd-mins'), s: document.getElementById('cd-secs') };
   let last = {};
@@ -505,20 +398,21 @@
   }
   tick(); setInterval(tick, 1000);
 
-  // ---- petal burst (click + periodic auto) ----
+  // tap names for a confetti burst
   const namesWrap = document.getElementById('namesWrap');
-  const burstColors = ['#E8A9B8','#C9A44C','#8C2E45','#8FA07C','#EAD5A0'];
+  const burstColors = ['#EFA93D','#E07A2E','#C1451B','#FF7A9C','#2F6F63'];
   function burst(x, y, count){
     for (let n = 0; n < count; n++){
       const p = document.createElement('div');
       p.className = 'burst-particle';
       const angle = Math.random() * Math.PI * 2;
-      const dist = 40 + Math.random() * 90;
+      const dist = 50 + Math.random() * 100;
       p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
       p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
       p.style.setProperty('--rot', (Math.random()*360) + 'deg');
       p.style.left = x + 'px'; p.style.top = y + 'px';
-      p.innerHTML = '<svg viewBox="0 0 24 24" fill="'+burstColors[n % burstColors.length]+'"><path d="M12 2c3 3 3 7 0 10-3-3-3-7 0-10z"/></svg>';
+      p.style.background = burstColors[n % burstColors.length];
+      p.style.borderRadius = (n % 2 === 0) ? '50%' : '3px';
       p.style.animation = 'burstOut 0.9s ease-out forwards';
       document.body.appendChild(p);
       setTimeout(() => p.remove(), 950);
@@ -528,28 +422,11 @@
   namesWrap.addEventListener('click', (e) => {
     if (burstCooldown) return;
     burstCooldown = true;
-    burst(e.clientX, e.clientY, 16);
-    setTimeout(() => burstCooldown = false, 700);
+    burst(e.clientX, e.clientY, 18);
+    setTimeout(() => burstCooldown = false, 600);
   });
   if (!reduceMotion){
-    setInterval(() => {
-      const x = window.innerWidth * (0.3 + Math.random()*0.4);
-      const y = window.innerHeight * 0.25;
-      burst(x, y, 8);
-    }, 9000);
-  }
-
-  // ---- mouse tilt on hero monogram (desktop only) ----
-  if (window.matchMedia('(hover: hover)').matches && !reduceMotion){
-    const mono = document.querySelector('.mandala-rings');
-    const heroSection = document.querySelector('.vine-anchor[data-idx="0"]');
-    heroSection.addEventListener('mousemove', (e) => {
-      const rect = heroSection.getBoundingClientRect();
-      const relX = (e.clientX - rect.left) / rect.width - 0.5;
-      const relY = (e.clientY - rect.top) / rect.height - 0.5;
-      mono.style.transform = 'perspective(500px) rotateY('+(relX*10)+'deg) rotateX('+(-relY*10)+'deg)';
-    });
-    heroSection.addEventListener('mouseleave', () => { mono.style.transform = ''; });
+    setInterval(() => burst(window.innerWidth * (0.3+Math.random()*0.4), window.innerHeight*0.3, 10), 9000);
   }
 </script>
 
