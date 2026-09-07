@@ -6,438 +6,375 @@
 <title>Surya &amp; Vishnupriya — Wedding Invitation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #FFF5E4;
-    --paper: #FBF0D9;
-    --mustard: #EEA236;
-    --orange: #E26D2D;
-    --rust: #B83A1B;
-    --pink: #F87595;
-    --teal: #2A6B60;
-    --brown: #332219;
-    --shadow: 4px 4px 0px var(--brown);
-    --shadow-lg: 7px 7px 0px var(--brown);
+    --bg-emerald: #0A1F1C;
+    --bg-card: #112A26;
+    --gold-1: #DFBA73;
+    --gold-2: #C59B27;
+    --gold-gradient: linear-gradient(135deg, #F3E5AB 0%, #DFBA73 50%, #997829 100%);
+    --text-light: #F7F5F0;
+    --text-muted: #A3B8B5;
+    --border-gold: rgba(223, 186, 115, 0.3);
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html { scroll-behavior: smooth; }
+  
   body {
-    margin: 0; background: var(--cream); color: var(--brown);
-    font-family: 'Poppins', sans-serif; overflow-x: hidden; position: relative;
-    line-height: 1.5;
+    margin: 0; background-color: var(--bg-emerald); color: var(--text-light);
+    font-family: 'Montserrat', sans-serif; font-weight: 300; overflow-x: hidden;
+    line-height: 1.6; letter-spacing: 0.03em;
   }
   body.locked { overflow: hidden; height: 100vh; }
 
-  /* Paper Grain Overlay */
-  .grain {
-    position: fixed; inset: 0; z-index: 99; pointer-events: none; opacity: 0.08;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Canvas Particle Overlay */
+  #dustCanvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.6;
   }
 
-  /* Flash overlay for shutter */
-  #flash {
-    position: fixed; inset: 0; background: #FFF; z-index: 1001; pointer-events: none;
-    opacity: 0; transition: opacity 0.1s ease-out;
-  }
-
-  /* ============ CAMERA INTRO ============ */
+  /* ============ WAX SEAL INTRO OVERLAY ============ */
   #intro {
-    position: fixed; inset: 0; z-index: 1000;
+    position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; background-color: #051210;
+    transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    padding: 2rem; text-align: center;
+  }
+  #intro.opened { opacity: 0; transform: scale(1.08); pointer-events: none; }
+
+  .envelope-card {
+    width: min(340px, 85vw); height: 220px; border: 1px solid var(--border-gold);
+    background: radial-gradient(circle at center, #14332E 0%, #0A1F1C 100%);
+    border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: radial-gradient(circle at center, var(--paper) 0%, var(--mustard) 60%, var(--orange) 100%);
-    padding: 1.5rem; text-align: center; overflow: hidden;
-    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
-  }
-  #intro.gone { transform: translateY(-100%); opacity: 0; pointer-events: none; }
-
-  /* Retro Camera Body */
-  .camera-container {
-    position: relative; width: 280px; height: 210px;
-    background: #E8D5B7; border: 4px solid var(--brown); border-radius: 28px;
-    box-shadow: var(--shadow-lg); display: flex; flex-direction: column; align-items: center;
-    margin-bottom: 2rem; transition: transform 0.3s ease;
-  }
-  .camera-top-stripe {
-    width: 100%; height: 40px; background: var(--rust); border-bottom: 4px solid var(--brown);
-    border-top-left-radius: 24px; border-top-right-radius: 24px; position: relative;
-  }
-  .viewfinder {
-    position: absolute; right: 20px; top: 10px; width: 24px; height: 20px;
-    background: var(--brown); border-radius: 6px; border: 2px solid var(--cream);
-  }
-  .flash-bulb {
-    position: absolute; left: 20px; top: 8px; width: 24px; height: 24px;
-    background: #FFF; border-radius: 50%; border: 3px solid var(--brown); box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
-  }
-  .lens-outer {
-    width: 110px; height: 110px; border-radius: 50%; background: var(--brown);
-    margin-top: 10px; display: flex; align-items: center; justify-content: center;
-    border: 4px solid var(--mustard); box-shadow: 0 4px 0 rgba(0,0,0,0.15);
-  }
-  .lens-inner {
-    width: 60px; height: 60px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, var(--teal), #102B27);
-    border: 3px solid var(--cream); position: relative; overflow: hidden;
-  }
-  .lens-glare {
-    position: absolute; top: 10%; right: 20%; width: 20px; height: 10px;
-    background: rgba(255,255,255,0.4); transform: rotate(-30deg); border-radius: 50%;
+    position: relative; transition: transform 0.6s ease;
   }
 
-  /* Photo Eject Slot */
-  .photo-slot {
-    position: absolute; bottom: -12px; width: 180px; height: 8px; background: var(--brown); border-radius: 4px;
+  .wax-seal {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #DFBA73, #8C6A1E);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    border: 2px solid #F3E5AB; transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulseGlow 3s infinite ease-in-out;
+  }
+  .wax-seal:hover { transform: scale(1.06); box-shadow: 0 12px 30px rgba(223, 186, 115, 0.4); }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 15px rgba(223, 186, 115, 0.2); }
+    50% { box-shadow: 0 0 30px rgba(223, 186, 115, 0.5); }
   }
 
-  /* Developing Polaroid Photo */
-  .polaroid-eject {
-    position: absolute; top: 120px; width: 160px; background: var(--cream);
-    border: 3px solid var(--brown); padding: 8px 8px 24px 8px; border-radius: 6px;
-    box-shadow: var(--shadow); z-index: -1; transform: translateY(0);
-    transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.27);
-  }
-  .polaroid-eject.ejected { transform: translateY(110px) rotate(-4deg); }
-  .polaroid-img-placeholder {
-    width: 100%; height: 120px; background: var(--teal); border: 2px solid var(--brown);
-    border-radius: 4px; display: flex; align-items: center; justify-content: center;
-    color: var(--cream); font-family: 'Bagel Fat One', cursive; font-size: 1.2rem;
+  .wax-seal span {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600;
+    color: #0A1F1C; letter-spacing: 1px;
   }
 
-  .snap-btn {
-    font-family: 'Bagel Fat One', cursive; font-size: 1.25rem;
-    background: var(--rust); color: var(--cream); border: 3px solid var(--brown);
-    padding: 0.9rem 2.4rem; border-radius: 999px; cursor: pointer;
-    box-shadow: var(--shadow); transition: transform 0.15s ease, box-shadow 0.15s ease;
+  .intro-text {
+    margin-top: 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+    font-style: italic; color: var(--gold-1); letter-spacing: 0.1em;
   }
-  .snap-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0px var(--brown); }
 
-  /* ============ MARQUEE ============ */
-  .marquee { overflow: hidden; white-space: nowrap; background: var(--brown); padding: 0.75rem 0; border-y: 3px solid var(--brown); }
-  .marquee-track { display: inline-block; animation: marqueeMove 18s linear infinite; }
-  .marquee span { font-family: 'Bagel Fat One', cursive; color: var(--cream); font-size: 1.05rem; padding: 0 1.5rem; letter-spacing: 0.05em; }
-  @keyframes marqueeMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-  /* ============ SCRAPBOOK MAIN CONTENT ============ */
-  .wrap { max-width: 680px; margin: 0 auto; padding: 3.5rem 1.25rem; text-align: center; }
-
-  /* Hero Polaroid Deck */
-  .hero-card {
-    background: #FFF; border: 3px solid var(--brown); border-radius: 16px;
-    padding: 1.25rem 1.25rem 2rem 1.25rem; box-shadow: var(--shadow-lg);
-    transform: rotate(-1.5deg); position: relative; margin: 1.5rem 0;
+  /* ============ TYPOGRAPHY & SHINE ============ */
+  .serif-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+  
+  .gold-gradient-text {
+    background: var(--gold-gradient); -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; display: inline-block;
   }
-  .tape-strip {
-    position: absolute; top: -14px; left: 50%; transform: translateX(-50%) rotate(2deg);
-    width: 110px; height: 28px; background: rgba(238, 162, 54, 0.85);
-    border: 1px dashed rgba(51, 34, 25, 0.4); z-index: 3;
+
+  /* ============ LAYOUT ============ */
+  .wrap { max-width: 800px; margin: 0 auto; padding: 5rem 1.5rem; position: relative; z-index: 2; text-align: center; }
+
+  /* Decorative Borders */
+  .gold-frame {
+    border: 1px solid var(--border-gold); padding: 3rem 1.5rem; position: relative;
+    background: rgba(17, 42, 38, 0.4); backdrop-filter: blur(10px);
+    border-radius: 4px; box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  }
+  .gold-frame::before {
+    content: ""; position: absolute; inset: 6px; border: 1px solid rgba(223, 186, 115, 0.15); pointer-events: none;
+  }
+
+  .names-header {
+    font-size: clamp(3rem, 10vw, 5.5rem); line-height: 1.1; margin: 1rem 0;
+    font-weight: 300; letter-spacing: 0.02em;
   }
   
-  .badge {
-    display: inline-block; font-family: 'Bagel Fat One', cursive; font-size: 0.95rem;
-    background: var(--mustard); color: var(--brown); border: 2.5px solid var(--brown);
-    border-radius: 999px; padding: 0.4rem 1.2rem; box-shadow: var(--shadow); margin-bottom: 0.8rem;
+  .ampersand {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+    color: var(--gold-1); display: block; font-size: 0.6em; margin: -0.2em 0;
   }
 
-  .names {
-    font-family: 'Bagel Fat One', cursive; font-size: clamp(2.8rem, 11vw, 4.8rem);
-    line-height: 1.15; color: var(--rust); margin: 0.5rem 0;
-    text-shadow: 3px 3px 0px var(--brown); word-break: break-word;
-  }
-  .amp { color: var(--teal); text-shadow: 3px 3px 0px var(--brown); }
-
-  .tagline { font-weight: 500; font-size: 1.05rem; color: var(--brown); margin: 1rem auto; max-width: 36ch; }
-
-  .date-stamp {
-    display: inline-block; font-family: 'Bagel Fat One', cursive; font-size: 1.25rem;
-    background: var(--teal); color: var(--cream); padding: 0.6rem 1.6rem;
-    border-radius: 12px; border: 3px solid var(--brown); box-shadow: var(--shadow);
-    transform: rotate(1deg); margin-top: 0.5rem;
+  .sub-tagline {
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.25em;
+    color: var(--text-muted); margin-bottom: 0.5rem;
   }
 
-  /* Countdown Grid */
-  .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-top: 2rem; }
-  .cd-box {
-    background: var(--paper); border: 3px solid var(--brown); border-radius: 14px;
-    padding: 0.75rem 0.25rem; box-shadow: var(--shadow);
-  }
-  .cd-num { font-family: 'Bagel Fat One', cursive; font-size: 1.6rem; color: var(--orange); display: block; line-height: 1; }
-  .cd-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; margin-top: 0.3rem; display: block; }
-
-  /* Family Cards */
-  h2.section-title {
-    font-family: 'Bagel Fat One', cursive; font-size: 2.2rem; color: var(--rust);
-    text-shadow: 3px 3px 0px var(--brown); margin: 0 0 1.5rem 0;
+  .date-display {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+    color: var(--gold-1); letter-spacing: 0.15em; margin-top: 2rem;
+    border-y: 1px solid var(--border-gold); padding: 0.8rem 0; display: inline-block; width: 100%; max-width: 400px;
   }
 
-  .families-grid { display: grid; grid-template-columns: 1fr; gap: 1.8rem; }
-  @media (min-width: 580px) { .families-grid { grid-template-columns: 1fr 1fr; } }
+  /* Countdown */
+  .countdown { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2.5rem; }
+  .cd-unit { display: flex; flex-direction: column; align-items: center; }
+  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--text-light); }
+  .cd-lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold-1); }
+
+  /* Sections */
+  .section-heading {
+    font-size: 2.4rem; color: var(--gold-1); margin-bottom: 2rem; position: relative; display: inline-block;
+  }
+  .section-heading::after {
+    content: ""; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+    width: 40px; height: 1px; background: var(--gold-1);
+  }
+
+  /* Cards Grid */
+  .fam-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem; }
+  @media(min-width: 600px) { .fam-grid { grid-template-columns: 1fr 1fr; } }
 
   .fam-card {
-    background: #FFF; border: 3px solid var(--brown); border-radius: 16px;
-    padding: 1.5rem 1.2rem; box-shadow: var(--shadow-lg); position: relative; text-align: left;
+    background: var(--bg-card); border: 1px solid var(--border-gold);
+    padding: 2.5rem 1.5rem; border-radius: 4px; text-align: center;
+    transition: transform 0.4s ease, border-color 0.4s ease;
   }
-  .fam-card:nth-child(1) { transform: rotate(-1deg); }
-  .fam-card:nth-child(2) { transform: rotate(1.5deg); }
-  .fam-badge {
-    font-family: 'Bagel Fat One', cursive; font-size: 0.85rem; color: var(--cream);
-    background: var(--teal); padding: 0.2rem 0.8rem; border-radius: 6px;
-    border: 2px solid var(--brown); display: inline-block; margin-bottom: 0.6rem;
-  }
-  .fam-name { font-weight: 800; font-size: 1.25rem; margin: 0 0 0.4rem 0; color: var(--brown); }
-  .fam-parents { font-size: 0.92rem; line-height: 1.5; opacity: 0.85; font-weight: 500; }
+  .fam-card:hover { transform: translateY(-5px); border-color: var(--gold-1); }
+  .fam-role { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--gold-1); margin-bottom: 0.5rem; }
+  .fam-name { font-size: 1.8rem; margin: 0 0 0.5rem 0; color: var(--text-light); }
+  .fam-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
 
-  /* Event Tickets */
-  .ticket {
-    background: #FFF; border: 3px solid var(--brown); border-radius: 18px;
-    padding: 1.6rem 1.4rem; box-shadow: var(--shadow-lg); text-align: left;
-    position: relative; margin-bottom: 2rem; overflow: hidden;
+  /* Timeline & Tickets */
+  .event-card {
+    background: var(--bg-card); border: 1px solid var(--border-gold);
+    padding: 2.5rem 2rem; border-radius: 4px; margin-bottom: 2.5rem; text-align: left;
+    position: relative; overflow: hidden;
   }
-  /* Ticket Notch Effect */
-  .ticket::before, .ticket::after {
-    content: ""; position: absolute; top: 50%; width: 24px; height: 24px;
-    background: var(--cream); border: 3px solid var(--brown); border-radius: 50%;
-    transform: translateY(-50%);
+  .event-badge {
+    position: absolute; top: 0; right: 0; background: var(--gold-gradient); color: var(--bg-emerald);
+    font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; padding: 0.4rem 1.2rem;
   }
-  .ticket::before { left: -14px; } .ticket::after { right: -14px; }
+  .event-time { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold-1); margin: 0.5rem 0; }
+  .event-title { font-size: 1.4rem; color: var(--text-light); margin: 0 0 0.2rem 0; font-weight: 400; }
+  .event-sub { font-size: 0.85rem; color: var(--text-muted); }
 
-  .ticket-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-  .ticket-pill {
-    font-family: 'Bagel Fat One', cursive; font-size: 0.85rem;
-    background: var(--orange); color: var(--cream); padding: 0.3rem 0.9rem;
-    border-radius: 999px; border: 2px solid var(--brown);
+  .map-box {
+    margin-top: 1.5rem; border: 1px solid var(--border-gold); border-radius: 4px; overflow: hidden; height: 220px;
   }
-  .ticket-time { font-family: 'Bagel Fat One', cursive; font-size: 1.8rem; color: var(--rust); margin: 0.8rem 0 0.2rem 0; }
-  .ticket-venue { font-weight: 800; font-size: 1.2rem; margin: 0; }
-  .ticket-sub { font-size: 0.95rem; opacity: 0.8; font-weight: 500; margin-top: 0.2rem; }
+  .map-box iframe { width: 100%; height: 100%; border: 0; filter: grayscale(0.8) invert(0.9) contrast(1.2); }
 
-  .map-wrapper {
-    margin-top: 1.2rem; border-radius: 12px; overflow: hidden;
-    border: 3px solid var(--brown); box-shadow: var(--shadow); height: 220px;
-  }
-  .map-wrapper iframe { width: 100%; height: 100%; border: 0; }
-
-  /* Footer */
-  footer { background: var(--paper); border-top: 3px solid var(--brown); padding: 3.5rem 1.25rem 2.5rem; text-align: center; }
-  .sign-off { font-family: 'Bagel Fat One', cursive; font-size: 2rem; color: var(--rust); text-shadow: 2px 2px 0px var(--brown); margin-top: 1.5rem; }
-
-  /* Utility Animations */
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  /* Animations */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .reveal.in { opacity: 1; transform: translateY(0); }
 
+  footer {
+    border-top: 1px solid var(--border-gold); padding: 4rem 1.5rem; text-align: center;
+    background: rgba(5, 18, 16, 0.6); position: relative; z-index: 2;
+  }
+
   @media (max-width: 480px) {
-    .wrap { padding: 2.5rem 1rem; }
-    .names { font-size: 2.8rem; }
-    .countdown { gap: 0.4rem; }
-    .cd-num { font-size: 1.3rem; }
+    .wrap { padding: 3rem 1rem; }
+    .gold-frame { padding: 2rem 1rem; }
+    .countdown { gap: 0.8rem; }
+    .cd-val { font-size: 1.7rem; }
   }
 </style>
 </head>
 <body class="locked">
 
-<div class="grain" aria-hidden="true"></div>
-<div id="flash" aria-hidden="true"></div>
+<canvas id="dustCanvas"></canvas>
 
-<!-- ============ INTRO: RETRO CAMERA ============ -->
+<!-- ============ WAX SEAL OVERLAY ============ -->
 <div id="intro">
-  <div class="camera-container" id="camera">
-    <div class="camera-top-stripe">
-      <div class="flash-bulb"></div>
-      <div class="viewfinder"></div>
-    </div>
-    <div class="lens-outer">
-      <div class="lens-inner">
-        <div class="lens-glare"></div>
-      </div>
-    </div>
-    <div class="photo-slot"></div>
-    <div class="polaroid-eject" id="polaroid">
-      <div class="polaroid-img-placeholder">S &amp; V</div>
+  <div class="envelope-card">
+    <div class="wax-seal" id="waxSeal">
+      <span>S&amp;V</span>
     </div>
   </div>
-
-  <button class="snap-btn" id="snapBtn">📸 Snap Photo</button>
-  <p style="font-weight: 700; margin-top: 1rem; color: var(--brown); font-size: 0.95rem;">
-    Tap to capture the moment! ✦
-  </p>
+  <p class="intro-text">Unseal the Invitation</p>
 </div>
 
 <!-- ============ MAIN CONTENT ============ -->
 <div class="page">
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>✦ SURYA + VISHNUPRIYA</span><span>13 · 09 · 2026</span><span>SAVE THE DATE ✦</span><span>BANGALORE</span>
-      <span>✦ SURYA + VISHNUPRIYA</span><span>13 · 09 · 2026</span><span>SAVE THE DATE ✦</span><span>BANGALORE</span>
-    </div>
-  </div>
 
   <div class="wrap">
-    <!-- Hero Polaroid Section -->
-    <div class="hero-card reveal">
-      <div class="tape-strip"></div>
-      <span class="badge">🕉️ With Blessings</span>
-      
-      <p style="font-style: italic; font-weight: 600; font-size: 0.9rem; margin: 0.5rem 0 1rem;">
-        || Om Virat Vishwabrahmane Namah ||<br>|| Arulmigu Meenakshi Sundareshwarar Thunai ||
+    <div class="gold-frame reveal">
+      <p class="sub-tagline">|| Om Virat Vishwabrahmane Namah ||</p>
+      <p class="sub-tagline">|| Arulmigu Meenakshi Sundareshwarar Thunai ||</p>
+
+      <p class="sub-tagline" style="margin-top: 2rem; color: var(--gold-1);">Together with their families</p>
+
+      <h1 class="serif-title names-header gold-gradient-text">
+        Surya
+        <span class="ampersand">&amp;</span>
+        Vishnupriya
+      </h1>
+
+      <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 42ch; margin: 1.5rem auto 0;">
+        Request the pleasure of your company as they celebrate their union in marriage.
       </p>
 
-      <p style="font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; color: var(--orange);">
-        Together with their families
-      </p>
-
-      <h1 class="names">Surya <span class="amp">&amp;</span> Vishnupriya</h1>
-
-      <p class="tagline">Are tying the knot and throwing the party of the year — come celebrate with us!</p>
-
-      <div class="date-stamp">SUN · 13 SEP 2026</div>
+      <div class="date-display">
+        SUNDAY · 13 SEPTEMBER 2026
+      </div>
 
       <!-- Countdown -->
       <div class="countdown" id="countdown">
-        <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-label">Days</span></div>
-        <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-label">Hours</span></div>
-        <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-label">Mins</span></div>
-        <div class="cd-box"><span class="cd-num" id="cd-s">--</span><span class="cd-label">Secs</span></div>
+        <div class="cd-unit"><span class="cd-val" id="cd-d">--</span><span class="cd-lbl">Days</span></div>
+        <div class="cd-unit"><span class="cd-val" id="cd-h">--</span><span class="cd-lbl">Hours</span></div>
+        <div class="cd-unit"><span class="cd-val" id="cd-m">--</span><span class="cd-lbl">Mins</span></div>
+        <div class="cd-unit"><span class="cd-val" id="cd-s">--</span><span class="cd-lbl">Secs</span></div>
       </div>
     </div>
   </div>
 
   <!-- Families Section -->
-  <section style="background: var(--paper); border-y: 3px solid var(--brown); padding: 3rem 0;">
-    <div class="wrap" style="padding-top: 0; padding-bottom: 0;">
-      <h2 class="section-title reveal">The Fam ✨</h2>
-      <div class="families-grid reveal">
-        <div class="fam-card">
-          <span class="fam-badge">GROOM</span>
-          <p class="fam-name">R. K. Surya, <span style="font-size: 0.9rem; font-weight: 500;">B.Tech.</span></p>
-          <p class="fam-parents">Son of Sri P. Ravi Kannan Achari &amp; Smt. R. K. Mariyammal</p>
+  <div class="wrap" style="padding-top: 0;">
+    <h2 class="serif-title section-heading reveal">The Families</h2>
+    
+    <div class="fam-grid reveal">
+      <div class="fam-card">
+        <div class="fam-role">Groom</div>
+        <div class="serif-title fam-name">R. K. Surya</div>
+        <div class="fam-desc">
+          B.Tech.<br><br>
+          Son of <strong>Sri P. Ravi Kannan Achari</strong><br>
+          &amp; <strong>Smt. R. K. Mariyammal</strong>
         </div>
-        <div class="fam-card">
-          <span class="fam-badge" style="background: var(--orange);">BRIDE</span>
-          <p class="fam-name">M. Vishnupriya, <span style="font-size: 0.9rem; font-weight: 500;">M.Com.</span></p>
-          <p class="fam-parents">Daughter of Sri S. Meenakshi Sundaram &amp; Smt. M. Bagya Lakshmi</p>
+      </div>
+
+      <div class="fam-card">
+        <div class="fam-role">Bride</div>
+        <div class="serif-title fam-name">M. Vishnupriya</div>
+        <div class="fam-desc">
+          M.Com.<br><br>
+          Daughter of <strong>Sri S. Meenakshi Sundaram</strong><br>
+          &amp; <strong>Smt. M. Bagya Lakshmi</strong>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Events / Lineup Section -->
-  <div class="wrap">
-    <h2 class="section-title reveal">The Lineup 🎟️</h2>
+  <!-- Ceremony Lineup -->
+  <div class="wrap" style="padding-top: 0;">
+    <h2 class="serif-title section-heading reveal">The Ceremonies</h2>
 
-    <!-- Ticket 1: Muhurtham -->
-    <div class="ticket reveal">
-      <div class="ticket-header">
-        <span class="ticket-pill">MUHURTHAM</span>
-        <span style="font-weight: 700; font-size: 0.95rem;">SUNDAY, 13 SEP</span>
-      </div>
-      <div class="ticket-time">7:00 – 8:30 AM</div>
-      <p class="ticket-venue">Shri Udbhava Kumaraswamy Temple</p>
-      <p class="ticket-sub">Kumaraswamy Layout, Bangalore</p>
-      
-      <div class="map-wrapper">
+    <!-- Muhurtham -->
+    <div class="event-card reveal">
+      <div class="event-badge">Muhurtham</div>
+      <div class="event-time">7:00 AM – 8:30 AM</div>
+      <h3 class="serif-title event-title">Shri Udbhava Kumaraswamy Temple</h3>
+      <div class="event-sub">Kumaraswamy Layout, Bangalore</div>
+
+      <div class="map-box">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.028889248053!2d77.56510279999999!3d12.9058639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1563b267b3f3%3A0x2cf8eacfa10e64a0!2sShri%20Udbhava%20Kumaraswami%20Temple!5e0!3m2!1sen!2sin!4v1788778936433!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
       </div>
     </div>
 
-    <!-- Ticket 2: Reception -->
-    <div class="ticket reveal">
-      <div class="ticket-header">
-        <span class="ticket-pill" style="background: var(--teal);">RECEPTION</span>
-        <span style="font-weight: 700; font-size: 0.95rem;">SUNDAY, 13 SEP</span>
-      </div>
-      <div class="ticket-time">10:30 AM Onwards</div>
-      <p class="ticket-venue">Sri Ayyappa Swamy Temple Mantapa</p>
-      <p class="ticket-sub">(Near Sagar Hospitals) · Kumaraswamy Layout, Bangalore</p>
+    <!-- Reception -->
+    <div class="event-card reveal">
+      <div class="event-badge">Reception</div>
+      <div class="event-time">10:30 AM Onwards</div>
+      <h3 class="serif-title event-title">Sri Ayyappa Swamy Temple Mantapa</h3>
+      <div class="event-sub">(Near Sagar Hospitals) · Kumaraswamy Layout, Bangalore</div>
     </div>
   </div>
 
   <!-- Footer -->
   <footer>
-    <div class="wrap" style="padding: 0;">
-      <span style="font-size: 2.5rem;">🌸</span>
-      <p style="font-weight: 600; font-size: 1.05rem; max-width: 30ch; margin: 0.8rem auto;">
-        With the blessings of our families &amp; best wishes from friends and relatives
-      </p>
-      <div style="font-size: 0.95rem; margin-top: 1.2rem; opacity: 0.85;">
-        <strong>Sri P. Ravi Kannan Achari &amp; Smt. R. K. Mariyammal</strong><br>
-        No. 239, 6th Cross, Bhavani Nagar, BSK II Stage, Bangalore – 560 070
-      </div>
-      <div class="sign-off">See You There! S &amp; V</div>
+    <div style="font-size: 1.5rem; color: var(--gold-1); margin-bottom: 1rem;">✦</div>
+    <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 36ch; margin: 0 auto 1.5rem;">
+      With the blessings of our elders and the best wishes of family and friends.
+    </p>
+    <div style="font-size: 0.85rem; color: var(--text-light); line-height: 1.8;">
+      <strong>Sri P. Ravi Kannan Achari &amp; Smt. R. K. Mariyammal</strong><br>
+      No. 239, 6th Cross, Bhavani Nagar, BSK II Stage, Bangalore – 560 070
+    </div>
+    <div class="serif-title gold-gradient-text" style="font-size: 2rem; margin-top: 2rem;">
+      Surya &amp; Vishnupriya
     </div>
   </footer>
+
 </div>
 
 <script>
-  // Web Audio Synthesized Shutter Sound
-  function playShutterSound() {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const bufferSize = ctx.sampleRate * 0.1;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-      }
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'highpass';
-      filter.frequency.value = 1000;
-      noise.connect(filter);
-      filter.connect(ctx.destination);
-      noise.start();
-    } catch(e) {
-      // Audio fallback silent
+  // Floating Ambient Gold Dust Particles
+  const canvas = document.getElementById('dustCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 1.8 + 0.5;
+      this.speedY = -(Math.random() * 0.3 + 0.1);
+      this.speedX = (Math.random() - 0.5) * 0.2;
+      this.opacity = Math.random() * 0.5 + 0.2;
+    }
+    update() {
+      this.y += this.speedY;
+      this.x += this.speedX;
+      if (this.y < 0) this.reset();
+    }
+    draw() {
+      ctx.fillStyle = `rgba(223, 186, 115, ${this.opacity})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
     }
   }
 
-  // Camera Flash and Ejection Logic
-  const snapBtn = document.getElementById('snapBtn');
-  const flash = document.getElementById('flash');
-  const polaroid = document.getElementById('polaroid');
+  for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  // Wax Seal Unseal Animation
+  const waxSeal = document.getElementById('waxSeal');
   const intro = document.getElementById('intro');
 
-  snapBtn.addEventListener('click', () => {
-    playShutterSound();
-    
-    // Trigger Camera Flash
-    flash.style.opacity = '1';
-    setTimeout(() => { flash.style.opacity = '0'; }, 150);
-
-    // Eject Polaroid Photo
-    polaroid.classList.add('ejected');
-
-    // Dismiss Intro Overlay
-    setTimeout(() => {
-      intro.classList.add('gone');
-      document.body.classList.remove('locked');
-      triggerScrollReveals();
-    }, 1400);
+  waxSeal.addEventListener('click', () => {
+    intro.classList.add('opened');
+    document.body.classList.remove('locked');
+    initScrollObserver();
   });
 
-  // Scroll Reveal Observer
-  function triggerScrollReveals() {
+  // Intersection Observer for Smooth Scroll Animations
+  function initScrollObserver() {
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if(entry.isIntersecting) {
+        if (entry.isIntersecting) {
           entry.target.classList.add('in');
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 });
 
     reveals.forEach(el => observer.observe(el));
   }
 
-  // Countdown Timer
-  const weddingDate = new Date('2026-09-13T07:00:00+05:30').getTime();
+  // Countdown Logic
+  const targetDate = new Date('2026-09-13T07:00:00+05:30').getTime();
   function updateCountdown() {
-    const now = new Date().getTime();
-    const diff = weddingDate - now;
-
+    const diff = targetDate - new Date().getTime();
     if (diff <= 0) return;
 
     document.getElementById('cd-d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
