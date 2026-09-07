@@ -3,307 +3,324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Surya &amp; Vishnupriya — Wedding Invitation</title>
+<title>S &amp; V ARE GETTING MARRIED ⚡</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-emerald: #0A1F1C;
-    --bg-card: #112A26;
-    --gold-1: #DFBA73;
-    --gold-2: #C59B27;
-    --gold-gradient: linear-gradient(135deg, #F3E5AB 0%, #DFBA73 50%, #997829 100%);
-    --text-light: #F7F5F0;
-    --text-muted: #A3B8B5;
-    --border-gold: rgba(223, 186, 115, 0.3);
+    --bg-dark: #0B0B0E;
+    --card-bg: rgba(22, 22, 29, 0.7);
+    --accent-neon: #CCFF00;
+    --accent-pink: #FF2A85;
+    --accent-purple: #8B5CF6;
+    --text-main: #FFFFFF;
+    --text-sub: #A1A1AA;
+    --border-glow: rgba(204, 255, 0, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.1);
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html { scroll-behavior: smooth; }
-  
+
   body {
-    margin: 0; background-color: var(--bg-emerald); color: var(--text-light);
-    font-family: 'Montserrat', sans-serif; font-weight: 300; overflow-x: hidden;
-    line-height: 1.6; letter-spacing: 0.03em;
+    margin: 0; background-color: var(--bg-dark); color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; line-height: 1.5;
   }
   body.locked { overflow: hidden; height: 100vh; }
 
-  /* Canvas Particle Overlay */
-  #dustCanvas {
-    position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.6;
+  /* Ambient Glow Background Blobs */
+  .glow-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .blob {
+    position: absolute; width: 350px; height: 350px; border-radius: 50%;
+    filter: blur(120px); opacity: 0.35; animation: floatBlob 12s ease-in-out infinite alternate;
+  }
+  .blob-1 { top: -100px; left: -100px; background: var(--accent-neon); }
+  .blob-2 { bottom: -100px; right: -100px; background: var(--accent-pink); animation-delay: -6s; }
+
+  @keyframes floatBlob {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(60px, 80px) scale(1.2); }
   }
 
-  /* ============ WAX SEAL INTRO OVERLAY ============ */
+  /* ============ GEN-Z UNLOCK INTRO ============ */
   #intro {
     position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; background-color: #051210;
-    transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-    padding: 2rem; text-align: center;
+    align-items: center; justify-content: center; background: #050507;
+    padding: 2rem; text-align: center; transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.6s ease;
   }
-  #intro.opened { opacity: 0; transform: scale(1.08); pointer-events: none; }
+  #intro.unlocked { transform: translateY(-100%); opacity: 0; pointer-events: none; }
 
-  .envelope-card {
-    width: min(340px, 85vw); height: 220px; border: 1px solid var(--border-gold);
-    background: radial-gradient(circle at center, #14332E 0%, #0A1F1C 100%);
-    border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    position: relative; transition: transform 0.6s ease;
+  .hero-pill {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+    padding: 0.5rem 1.2rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600;
+    color: var(--accent-neon); margin-bottom: 1.5rem; letter-spacing: 0.05em;
   }
 
-  .wax-seal {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #DFBA73, #8C6A1E);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4);
-    display: flex; align-items: center; justify-content: center; cursor: pointer;
-    border: 2px solid #F3E5AB; transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: pulseGlow 3s infinite ease-in-out;
+  .intro-title {
+    font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 800; line-height: 1.05; text-transform: uppercase; margin-bottom: 2rem;
   }
-  .wax-seal:hover { transform: scale(1.06); box-shadow: 0 12px 30px rgba(223, 186, 115, 0.4); }
-  @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 15px rgba(223, 186, 115, 0.2); }
-    50% { box-shadow: 0 0 30px rgba(223, 186, 115, 0.5); }
+  .intro-title span { color: var(--accent-neon); }
+
+  /* Swipe / Tap Unlock Slider Component */
+  .unlock-track {
+    width: min(320px, 85vw); height: 64px; background: rgba(255,255,255,0.08);
+    border: 1px solid var(--glass-border); border-radius: 999px; position: relative;
+    display: flex; align-items: center; padding: 6px; cursor: pointer; user-select: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+  }
+  .unlock-text {
+    width: 100%; text-align: center; font-weight: 700; font-size: 0.9rem;
+    letter-spacing: 0.1em; color: var(--text-sub); text-transform: uppercase; padding-left: 40px;
+  }
+  .unlock-thumb {
+    width: 52px; height: 52px; background: var(--accent-neon); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; color: var(--bg-dark);
+    font-weight: 800; font-size: 1.2rem; position: absolute; left: 6px;
+    box-shadow: 0 0 20px var(--accent-neon); transition: transform 0.1s ease-out;
   }
 
-  .wax-seal span {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600;
-    color: #0A1F1C; letter-spacing: 1px;
+  /* ============ MARQUEE TICKER ============ */
+  .marquee {
+    overflow: hidden; white-space: nowrap; background: var(--accent-neon);
+    color: var(--bg-dark); padding: 0.75rem 0; font-weight: 800;
+    font-family: 'Syne', sans-serif; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .marquee-track { display: inline-block; animation: marquee 12s linear infinite; }
+  .marquee span { padding: 0 1.5rem; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ============ MAIN SCRAPBOOK / CARD LAYOUT ============ */
+  .wrap { max-width: 680px; margin: 0 auto; padding: 4rem 1.25rem; position: relative; z-index: 2; }
+
+  /* Floating Y2K Stickers */
+  .sticker {
+    position: absolute; background: var(--accent-pink); color: #FFF; font-weight: 800;
+    font-size: 0.75rem; padding: 0.4rem 0.8rem; border-radius: 8px;
+    text-transform: uppercase; transform: rotate(-8deg); box-shadow: 0 8px 20px rgba(255, 42, 133, 0.4);
+    z-index: 3; pointer-events: none;
   }
 
-  .intro-text {
-    margin-top: 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
-    font-style: italic; color: var(--gold-1); letter-spacing: 0.1em;
+  .hero-card {
+    background: var(--card-bg); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 3rem 1.5rem; backdrop-filter: blur(16px);
+    text-align: center; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   }
 
-  /* ============ TYPOGRAPHY & SHINE ============ */
-  .serif-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
-  
-  .gold-gradient-text {
-    background: var(--gold-gradient); -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; display: inline-block;
+  .names-title {
+    font-family: 'Syne', sans-serif; font-size: clamp(3rem, 11vw, 5.5rem);
+    font-weight: 800; line-height: 0.95; text-transform: uppercase; margin: 1rem 0;
+    letter-spacing: -0.02em;
+  }
+  .names-title .and-badge {
+    display: inline-block; background: var(--accent-purple); color: #FFF;
+    font-size: 0.35em; padding: 0.1em 0.4em; border-radius: 12px; vertical-align: middle;
+    transform: rotate(-6deg); margin: 0 0.1em;
   }
 
-  /* ============ LAYOUT ============ */
-  .wrap { max-width: 800px; margin: 0 auto; padding: 5rem 1.5rem; position: relative; z-index: 2; text-align: center; }
-
-  /* Decorative Borders */
-  .gold-frame {
-    border: 1px solid var(--border-gold); padding: 3rem 1.5rem; position: relative;
-    background: rgba(17, 42, 38, 0.4); backdrop-filter: blur(10px);
-    border-radius: 4px; box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-  }
-  .gold-frame::before {
-    content: ""; position: absolute; inset: 6px; border: 1px solid rgba(223, 186, 115, 0.15); pointer-events: none;
+  .badge-neon {
+    display: inline-block; background: rgba(204, 255, 0, 0.1); border: 1px solid var(--accent-neon);
+    color: var(--accent-neon); font-size: 0.8rem; font-weight: 700; padding: 0.4rem 1rem;
+    border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em;
   }
 
-  .names-header {
-    font-size: clamp(3rem, 10vw, 5.5rem); line-height: 1.1; margin: 1rem 0;
-    font-weight: 300; letter-spacing: 0.02em;
-  }
-  
-  .ampersand {
-    font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
-    color: var(--gold-1); display: block; font-size: 0.6em; margin: -0.2em 0;
+  .date-pill {
+    background: var(--text-main); color: var(--bg-dark); font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.25rem; padding: 0.8rem 1.8rem; border-radius: 16px;
+    display: inline-block; margin-top: 1.5rem; transform: rotate(-1deg);
   }
 
-  .sub-tagline {
-    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.25em;
-    color: var(--text-muted); margin-bottom: 0.5rem;
+  /* Countdown Grid */
+  .countdown-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-top: 2.5rem;
   }
-
-  .date-display {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
-    color: var(--gold-1); letter-spacing: 0.15em; margin-top: 2rem;
-    border-y: 1px solid var(--border-gold); padding: 0.8rem 0; display: inline-block; width: 100%; max-width: 400px;
+  .cd-box {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 0.8rem 0.2rem; text-align: center;
   }
+  .cd-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--accent-neon); display: block; }
+  .cd-lbl { font-size: 0.65rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; }
 
-  /* Countdown */
-  .countdown { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2.5rem; }
-  .cd-unit { display: flex; flex-direction: column; align-items: center; }
-  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--text-light); }
-  .cd-lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold-1); }
-
-  /* Sections */
-  .section-heading {
-    font-size: 2.4rem; color: var(--gold-1); margin-bottom: 2rem; position: relative; display: inline-block;
-  }
-  .section-heading::after {
-    content: ""; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
-    width: 40px; height: 1px; background: var(--gold-1);
-  }
-
-  /* Cards Grid */
-  .fam-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem; }
-  @media(min-width: 600px) { .fam-grid { grid-template-columns: 1fr 1fr; } }
+  /* Family Grid */
+  .fam-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; margin-top: 2rem; }
+  @media(min-width: 580px) { .fam-grid { grid-template-columns: 1fr 1fr; } }
 
   .fam-card {
-    background: var(--bg-card); border: 1px solid var(--border-gold);
-    padding: 2.5rem 1.5rem; border-radius: 4px; text-align: center;
-    transition: transform 0.4s ease, border-color 0.4s ease;
+    background: var(--card-bg); border: 1px solid var(--glass-border);
+    border-radius: 20px; padding: 1.8rem 1.25rem; text-align: left;
+    backdrop-filter: blur(16px);
   }
-  .fam-card:hover { transform: translateY(-5px); border-color: var(--gold-1); }
-  .fam-role { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--gold-1); margin-bottom: 0.5rem; }
-  .fam-name { font-size: 1.8rem; margin: 0 0 0.5rem 0; color: var(--text-light); }
-  .fam-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+  .fam-tag { font-size: 0.7rem; font-weight: 800; color: var(--accent-pink); text-transform: uppercase; letter-spacing: 0.1em; }
+  .fam-name { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin: 0.4rem 0; }
+  .fam-parents { font-size: 0.85rem; color: var(--text-sub); line-height: 1.5; }
 
-  /* Timeline & Tickets */
+  /* Event Tickets */
   .event-card {
-    background: var(--bg-card); border: 1px solid var(--border-gold);
-    padding: 2.5rem 2rem; border-radius: 4px; margin-bottom: 2.5rem; text-align: left;
-    position: relative; overflow: hidden;
+    background: var(--card-bg); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 2rem 1.5rem; margin-top: 1.5rem; text-align: left;
+    position: relative; backdrop-filter: blur(16px);
   }
-  .event-badge {
-    position: absolute; top: 0; right: 0; background: var(--gold-gradient); color: var(--bg-emerald);
-    font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; padding: 0.4rem 1.2rem;
+  .event-time {
+    font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--accent-neon); margin: 0.5rem 0;
   }
-  .event-time { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold-1); margin: 0.5rem 0; }
-  .event-title { font-size: 1.4rem; color: var(--text-light); margin: 0 0 0.2rem 0; font-weight: 400; }
-  .event-sub { font-size: 0.85rem; color: var(--text-muted); }
+  .event-title { font-size: 1.25rem; font-weight: 700; margin: 0; }
+  .event-sub { font-size: 0.85rem; color: var(--text-sub); margin-top: 0.2rem; }
 
   .map-box {
-    margin-top: 1.5rem; border: 1px solid var(--border-gold); border-radius: 4px; overflow: hidden; height: 220px;
+    margin-top: 1.2rem; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--glass-border); height: 200px;
   }
-  .map-box iframe { width: 100%; height: 100%; border: 0; filter: grayscale(0.8) invert(0.9) contrast(1.2); }
+  .map-box iframe { width: 100%; height: 100%; border: 0; filter: invert(0.9) hue-rotate(180deg); }
 
-  /* Animations */
-  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  /* Interactive Tap Blast Button */
+  .blast-btn {
+    width: 100%; background: var(--accent-pink); color: #FFF; border: none;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem;
+    padding: 1.2rem; border-radius: 18px; cursor: pointer; margin-top: 2rem;
+    box-shadow: 0 10px 30px rgba(255, 42, 133, 0.4); text-transform: uppercase;
+    transition: transform 0.1s ease;
+  }
+  .blast-btn:active { transform: scale(0.98); }
+
+  /* Reveal Effect */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .reveal.in { opacity: 1; transform: translateY(0); }
 
   footer {
-    border-top: 1px solid var(--border-gold); padding: 4rem 1.5rem; text-align: center;
-    background: rgba(5, 18, 16, 0.6); position: relative; z-index: 2;
-  }
-
-  @media (max-width: 480px) {
-    .wrap { padding: 3rem 1rem; }
-    .gold-frame { padding: 2rem 1rem; }
-    .countdown { gap: 0.8rem; }
-    .cd-val { font-size: 1.7rem; }
+    text-align: center; padding: 4rem 1.25rem 3rem; color: var(--text-sub); font-size: 0.85rem;
   }
 </style>
 </head>
 <body class="locked">
 
-<canvas id="dustCanvas"></canvas>
-
-<!-- ============ WAX SEAL OVERLAY ============ -->
-<div id="intro">
-  <div class="envelope-card">
-    <div class="wax-seal" id="waxSeal">
-      <span>S&amp;V</span>
-    </div>
-  </div>
-  <p class="intro-text">Unseal the Invitation</p>
+<div class="glow-bg">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
 </div>
 
-<!-- ============ MAIN CONTENT ============ -->
+<!-- ============ INTRO OVERLAY ============ -->
+<div id="intro">
+  <div class="hero-pill">⚡ ADMIT ONE — WEDDING PASS</div>
+  <div class="intro-title">Surya<br><span>&amp;</span> Vishnupriya</div>
+
+  <div class="unlock-track" id="unlockTrack">
+    <div class="unlock-thumb" id="unlockThumb">→</div>
+    <div class="unlock-text">Swipe to Pass</div>
+  </div>
+</div>
+
+<!-- ============ MAIN PAGE ============ -->
 <div class="page">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>✦ SAVE THE DATE</span><span>13 . 09 . 2026</span><span>BANGALORE</span><span>SURYA + VISHNUPRIYA</span>
+      <span>✦ SAVE THE DATE</span><span>13 . 09 . 2026</span><span>BANGALORE</span><span>SURYA + VISHNUPRIYA</span>
+    </div>
+  </div>
 
   <div class="wrap">
-    <div class="gold-frame reveal">
-      <p class="sub-tagline">|| Om Virat Vishwabrahmane Namah ||</p>
-      <p class="sub-tagline">|| Arulmigu Meenakshi Sundareshwarar Thunai ||</p>
+    <div class="sticker" style="top: 20px; right: 10px;">PARTY TIME 🎉</div>
 
-      <p class="sub-tagline" style="margin-top: 2rem; color: var(--gold-1);">Together with their families</p>
+    <div class="hero-card reveal">
+      <span class="badge-neon">🕉️ With Blessings</span>
 
-      <h1 class="serif-title names-header gold-gradient-text">
-        Surya
-        <span class="ampersand">&amp;</span>
-        Vishnupriya
-      </h1>
-
-      <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 42ch; margin: 1.5rem auto 0;">
-        Request the pleasure of your company as they celebrate their union in marriage.
+      <p style="font-size: 0.8rem; color: var(--text-sub); margin-top: 1rem; font-weight: 600;">
+        || Om Virat Vishwabrahmane Namah ||<br>|| Arulmigu Meenakshi Sundareshwarar Thunai ||
       </p>
 
-      <div class="date-display">
-        SUNDAY · 13 SEPTEMBER 2026
-      </div>
+      <h1 class="names-title">
+        Surya<br><span class="and-badge">ampersand</span><br>Vishnupriya
+      </h1>
+
+      <p style="color: var(--text-sub); font-size: 0.95rem; max-width: 32ch; margin: 0 auto;">
+        We are tying the knot! Drop by and celebrate with us.
+      </p>
+
+      <div class="date-pill">SUN · 13 SEP 2026</div>
 
       <!-- Countdown -->
-      <div class="countdown" id="countdown">
-        <div class="cd-unit"><span class="cd-val" id="cd-d">--</span><span class="cd-lbl">Days</span></div>
-        <div class="cd-unit"><span class="cd-val" id="cd-h">--</span><span class="cd-lbl">Hours</span></div>
-        <div class="cd-unit"><span class="cd-val" id="cd-m">--</span><span class="cd-lbl">Mins</span></div>
-        <div class="cd-unit"><span class="cd-val" id="cd-s">--</span><span class="cd-lbl">Secs</span></div>
+      <div class="countdown-grid">
+        <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Days</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">Hrs</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">Min</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">Sec</span></div>
       </div>
     </div>
-  </div>
 
-  <!-- Families Section -->
-  <div class="wrap" style="padding-top: 0;">
-    <h2 class="serif-title section-heading reveal">The Families</h2>
-    
-    <div class="fam-grid reveal">
-      <div class="fam-card">
-        <div class="fam-role">Groom</div>
-        <div class="serif-title fam-name">R. K. Surya</div>
-        <div class="fam-desc">
-          B.Tech.<br><br>
-          Son of <strong>Sri P. Ravi Kannan Achari</strong><br>
-          &amp; <strong>Smt. R. K. Mariyammal</strong>
-        </div>
+    <!-- Family Section -->
+    <div style="margin-top: 3rem;">
+      <div style="font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; text-transform: uppercase;" class="reveal">
+        The Fam ✨
       </div>
 
-      <div class="fam-card">
-        <div class="fam-role">Bride</div>
-        <div class="serif-title fam-name">M. Vishnupriya</div>
-        <div class="fam-desc">
-          M.Com.<br><br>
-          Daughter of <strong>Sri S. Meenakshi Sundaram</strong><br>
-          &amp; <strong>Smt. M. Bagya Lakshmi</strong>
+      <div class="fam-grid reveal">
+        <div class="fam-card">
+          <div class="fam-tag">The Groom</div>
+          <div class="fam-name">R. K. Surya <span style="font-size: 0.8rem; opacity: 0.6;">B.Tech.</span></div>
+          <div class="fam-parents">Son of Sri P. Ravi Kannan Achari &amp; Smt. R. K. Mariyammal</div>
+        </div>
+
+        <div class="fam-card">
+          <div class="fam-tag" style="color: var(--accent-neon);">The Bride</div>
+          <div class="fam-name">M. Vishnupriya <span style="font-size: 0.8rem; opacity: 0.6;">M.Com.</span></div>
+          <div class="fam-parents">Daughter of Sri S. Meenakshi Sundaram &amp; Smt. M. Bagya Lakshmi</div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Ceremony Lineup -->
-  <div class="wrap" style="padding-top: 0;">
-    <h2 class="serif-title section-heading reveal">The Ceremonies</h2>
+    <!-- Event Lineup -->
+    <div style="margin-top: 3rem;">
+      <div style="font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; text-transform: uppercase;" class="reveal">
+        The Schedule 🎟️
+      </div>
 
-    <!-- Muhurtham -->
-    <div class="event-card reveal">
-      <div class="event-badge">Muhurtham</div>
-      <div class="event-time">7:00 AM – 8:30 AM</div>
-      <h3 class="serif-title event-title">Shri Udbhava Kumaraswamy Temple</h3>
-      <div class="event-sub">Kumaraswamy Layout, Bangalore</div>
+      <!-- Event 1 -->
+      <div class="event-card reveal">
+        <span class="badge-neon">Muhurtham</span>
+        <div class="event-time">7:00 – 8:30 AM</div>
+        <div class="event-title">Shri Udbhava Kumaraswamy Temple</div>
+        <div class="event-sub">Kumaraswamy Layout, Bangalore</div>
 
-      <div class="map-box">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.028889248053!2d77.56510279999999!3d12.9058639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1563b267b3f3%3A0x2cf8eacfa10e64a0!2sShri%20Udbhava%20Kumaraswami%20Temple!5e0!3m2!1sen!2sin!4v1788778936433!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+        <div class="map-box">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.028889248053!2d77.56510279999999!3d12.9058639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1563b267b3f3%3A0x2cf8eacfa10e64a0!2sShri%20Udbhava%20Kumaraswami%20Temple!5e0!3m2!1sen!2sin!4v1788778936433!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- Event 2 -->
+      <div class="event-card reveal">
+        <span class="badge-neon" style="border-color: var(--accent-pink); color: var(--accent-pink);">Reception</span>
+        <div class="event-time">10:30 AM Onwards</div>
+        <div class="event-title">Sri Ayyappa Swamy Temple Mantapa</div>
+        <div class="event-sub">(Near Sagar Hospitals) · Kumaraswamy Layout, Bangalore</div>
       </div>
     </div>
 
-    <!-- Reception -->
-    <div class="event-card reveal">
-      <div class="event-badge">Reception</div>
-      <div class="event-time">10:30 AM Onwards</div>
-      <h3 class="serif-title event-title">Sri Ayyappa Swamy Temple Mantapa</h3>
-      <div class="event-sub">(Near Sagar Hospitals) · Kumaraswamy Layout, Bangalore</div>
-    </div>
+    <button class="blast-btn reveal" id="blastBtn">💥 Tap for Hype!</button>
   </div>
 
-  <!-- Footer -->
   <footer>
-    <div style="font-size: 1.5rem; color: var(--gold-1); margin-bottom: 1rem;">✦</div>
-    <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 36ch; margin: 0 auto 1.5rem;">
-      With the blessings of our elders and the best wishes of family and friends.
+    <p>With blessings from our families &amp; friends</p>
+    <p style="color: var(--text-main); font-weight: 700; margin-top: 0.5rem;">
+      Sri P. Ravi Kannan Achari &amp; Smt. R. K. Mariyammal
     </p>
-    <div style="font-size: 0.85rem; color: var(--text-light); line-height: 1.8;">
-      <strong>Sri P. Ravi Kannan Achari &amp; Smt. R. K. Mariyammal</strong><br>
-      No. 239, 6th Cross, Bhavani Nagar, BSK II Stage, Bangalore – 560 070
-    </div>
-    <div class="serif-title gold-gradient-text" style="font-size: 2rem; margin-top: 2rem;">
-      Surya &amp; Vishnupriya
+    <p>No. 239, 6th Cross, Bhavani Nagar, BSK II Stage, Bangalore – 560 070</p>
+    <div style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--accent-neon); margin-top: 1.5rem;">
+      SEE YOU THERE! S &amp; V
     </div>
   </footer>
-
 </div>
 
+<!-- Canvas for Confetti Blasts -->
+<canvas id="confettiCanvas" style="position: fixed; inset:0; pointer-events:none; z-index:9999;"></canvas>
+
 <script>
-  // Floating Ambient Gold Dust Particles
-  const canvas = document.getElementById('dustCanvas');
+  // Canvas Confetti System
+  const canvas = document.getElementById('confettiCanvas');
   const ctx = canvas.getContext('2d');
-  let particles = [];
+  let confetti = [];
 
   function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -312,51 +329,99 @@
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
 
-  class Particle {
-    constructor() {
-      this.reset();
-    }
-    reset() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 1.8 + 0.5;
-      this.speedY = -(Math.random() * 0.3 + 0.1);
-      this.speedX = (Math.random() - 0.5) * 0.2;
-      this.opacity = Math.random() * 0.5 + 0.2;
-    }
-    update() {
-      this.y += this.speedY;
-      this.x += this.speedX;
-      if (this.y < 0) this.reset();
-    }
-    draw() {
-      ctx.fillStyle = `rgba(223, 186, 115, ${this.opacity})`;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
+  function triggerConfetti(x, y) {
+    const colors = ['#CCFF00', '#FF2A85', '#8B5CF6', '#FFFFFF'];
+    for (let i = 0; i < 60; i++) {
+      confetti.push({
+        x: x || canvas.width / 2,
+        y: y || canvas.height / 2,
+        vx: (Math.random() - 0.5) * 12,
+        vy: (Math.random() - 0.5) * 12 - 4,
+        size: Math.random() * 8 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        life: 100
+      });
     }
   }
 
-  for (let i = 0; i < 50; i++) particles.push(new Particle());
-
-  function animateParticles() {
+  function renderConfetti() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animateParticles);
+    confetti.forEach((p, index) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.2; // Gravity
+      p.life -= 1.5;
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = Math.max(p.life / 100, 0);
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+      if (p.life <= 0) confetti.splice(index, 1);
+    });
+    requestAnimationFrame(renderConfetti);
   }
-  animateParticles();
+  renderConfetti();
 
-  // Wax Seal Unseal Animation
-  const waxSeal = document.getElementById('waxSeal');
+  // Drag / Click Unlock Slider
+  const unlockTrack = document.getElementById('unlockTrack');
+  const unlockThumb = document.getElementById('unlockThumb');
   const intro = document.getElementById('intro');
+  let isDragging = false;
+  let startX = 0;
 
-  waxSeal.addEventListener('click', () => {
-    intro.classList.add('opened');
+  function unlockPage() {
+    triggerConfetti();
+    intro.classList.add('unlocked');
     document.body.classList.remove('locked');
     initScrollObserver();
+  }
+
+  // Touch & Mouse Drag Handlers
+  unlockTrack.addEventListener('mousedown', (e) => startDrag(e.clientX));
+  unlockTrack.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
+
+  window.addEventListener('mousemove', (e) => onDrag(e.clientX));
+  window.addEventListener('touchmove', (e) => onDrag(e.touches[0].clientX));
+
+  window.addEventListener('mouseup', endDrag);
+  window.addEventListener('touchend', endDrag);
+
+  function startDrag(x) {
+    isDragging = true;
+    startX = x;
+  }
+
+  function onDrag(x) {
+    if (!isDragging) return;
+    const maxDelta = unlockTrack.offsetWidth - 64;
+    let delta = x - startX;
+    if (delta < 0) delta = 0;
+    if (delta > maxDelta) delta = maxDelta;
+
+    unlockThumb.style.transform = `translateX(${delta}px)`;
+
+    if (delta >= maxDelta - 5) {
+      isDragging = false;
+      unlockPage();
+    }
+  }
+
+  function endDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    unlockThumb.style.transform = `translateX(0px)`;
+  }
+
+  // Backup Click-to-Unlock
+  unlockTrack.addEventListener('click', () => {
+    unlockThumb.style.transform = `translateX(${unlockTrack.offsetWidth - 64}px)`;
+    setTimeout(unlockPage, 200);
   });
 
-  // Intersection Observer for Smooth Scroll Animations
+  // Hype Button Event
+  document.getElementById('blastBtn').addEventListener('click', (e) => {
+    triggerConfetti(e.clientX, e.clientY);
+  });
+
+  // Scroll Animations
   function initScrollObserver() {
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -366,7 +431,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1 });
 
     reveals.forEach(el => observer.observe(el));
   }
